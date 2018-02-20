@@ -1,4 +1,4 @@
-package com.pap.nuts.services;
+package com.pap.nuts.webservices;
 
 import javax.servlet.ServletContext;
 import javax.ws.rs.GET;
