@@ -1,15 +1,15 @@
-package com.pap.nuts.modules.services.threads;
+package com.pap.nuts.modules.services.threads.utils;
 
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
-public class SimpleThreadFactory implements ThreadFactory {
+public class ThreadManufactorum implements ThreadFactory {
 	
 	private int priority;
 	private volatile AtomicInteger cnt;
 	
-	public SimpleThreadFactory(int priority){
+	public ThreadManufactorum(int priority){
 		this.priority = priority;
 		cnt = new AtomicInteger(0);
 	}
@@ -21,7 +21,7 @@ public class SimpleThreadFactory implements ThreadFactory {
 		thread.setPriority(priority);
 		thread.setDaemon(true);
 		
-		ThreadService.addToThreadCache(thread);
+		ThreadCache.addToThreadCache(thread);
 		
 		return thread;
 	}

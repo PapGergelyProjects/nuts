@@ -1,9 +1,9 @@
-package com.pap.nuts.modules.services.threads;
+package com.pap.nuts.modules.services.threads.utils;
 
 import java.util.Iterator;
 import java.util.WeakHashMap;
 
-public class ThreadService {
+public class ThreadCache {
 	
 	private static volatile WeakHashMap<Thread, Void> threadCache = new WeakHashMap<>();
 	
