@@ -1,12 +1,14 @@
 package com.pap.nuts.utils;
 
+import java.util.concurrent.TimeUnit;
+
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 import org.apache.log4j.Logger;
 
-import com.pap.nuts.modules.services.threads.ThVersionMonitoring;
 import com.pap.nuts.modules.services.threads.ThreadServiceHandler;
+import com.pap.nuts.modules.services.threads.processes.VersionHandlerThread;
 
 public class AppContext implements ServletContextListener {
 	
@@ -21,7 +23,8 @@ public class AppContext implements ServletContextListener {
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
 		LOGGER.info("Nuts has been initialized!");
-		ThreadServiceHandler.SCHEDULED.execute(new ThVersionMonitoring());
+		NutAppInitializer.initApp();
+		ThreadServiceHandler.SCHEDULED.process(1, TimeUnit.MINUTES, new VersionHandlerThread());
 	}
 	
 }

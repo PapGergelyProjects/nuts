@@ -10,32 +10,40 @@ import com.pap.nuts.modules.services.threads.utils.ThreadManufactorum;
 
 public enum ThreadServiceHandler implements ThreadUtils {
 	
-	SCHEDULED{
-		
+	FIXED {
 		@Override
-		public void execute(Runnable... processes) {
+		public void process(Runnable... processes) {
+			if(cachedThreadPool==null){
+				cachedThreadPool = Executors.newCachedThreadPool(new ThreadManufactorum(Thread.NORM_PRIORITY));
+			}
+			for(Runnable process : processes){
+				cachedThreadPool.execute(process);
+			}
+		}
+	},
+	SCHEDULED{
+		@Override
+		public void process(long timeQty, TimeUnit unit, Runnable... processes){
 			if(scheduledService==null){
 				scheduledService = Executors.newScheduledThreadPool(3, new ThreadManufactorum(Thread.NORM_PRIORITY));
 			}
 			for(Runnable process : processes){
-				scheduledService.scheduleAtFixedRate(process, 0, 1, TimeUnit.MINUTES);
+				scheduledService.scheduleAtFixedRate(process, 0, timeQty, unit);
 			}
 		}
-		
 	},
 	SHUTDOWN{
-
-		@Override
-		public void execute(Runnable... process){}
-
 		@Override
 		public void shutdown() {
-			if(scheduledService==null){
+			if(scheduledService!=null){
 				scheduledService.shutdown();
+			}
+			if(cachedThreadPool!=null){
+				cachedThreadPool.shutdown();
 			}
 		}
 	};
 	
 	private static ScheduledExecutorService scheduledService;
-	public abstract void execute(Runnable... process);
+	private static ExecutorService cachedThreadPool;
 }
