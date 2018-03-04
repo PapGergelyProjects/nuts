@@ -94,8 +94,8 @@ public enum TableInsertValues {
             StringJoiner insertValues = new StringJoiner(",", "(",")");
             insertValues.add("'"+records.get("trip_id")+"'");
             insertValues.add("'"+records.get("stop_id")+"'");
-            insertValues.add(records.get("arrival_time"));
-            insertValues.add(records.get("departure_time"));
+            insertValues.add("'"+records.get("arrival_time")+"'::interval");
+            insertValues.add("'"+records.get("departure_time")+"'::interval");
             insertValues.add(records.get("stop_sequence"));
             insertValues.add(nullValues(records.get("pickup_type"), false));
             insertValues.add(nullValues(records.get("drop_off_type"), false));
@@ -155,7 +155,7 @@ public enum TableInsertValues {
     }
 
     private static String strToDateFormat(String rawDate){
-        return rawDate.substring(0,4)+"-"+rawDate.substring(4,6)+"-"+rawDate.substring(6,8);
+        return "'"+rawDate.substring(0,4)+"-"+rawDate.substring(4,6)+"-"+rawDate.substring(6,8)+"'";
     }
 
     private static String nullValues(String value, boolean isStr){

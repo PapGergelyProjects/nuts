@@ -14,7 +14,7 @@ public enum ThreadServiceHandler implements ThreadUtils {
 		@Override
 		public void process(Runnable... processes) {
 			if(cachedThreadPool==null){
-				cachedThreadPool = Executors.newCachedThreadPool(new ThreadManufactorum(Thread.NORM_PRIORITY));
+				cachedThreadPool = Executors.newCachedThreadPool(manufactorum);
 			}
 			for(Runnable process : processes){
 				cachedThreadPool.execute(process);
@@ -25,7 +25,7 @@ public enum ThreadServiceHandler implements ThreadUtils {
 		@Override
 		public void process(long timeQty, TimeUnit unit, Runnable... processes){
 			if(scheduledService==null){
-				scheduledService = Executors.newScheduledThreadPool(3, new ThreadManufactorum(Thread.NORM_PRIORITY));
+				scheduledService = Executors.newScheduledThreadPool(3, manufactorum);
 			}
 			for(Runnable process : processes){
 				scheduledService.scheduleAtFixedRate(process, 0, timeQty, unit);
@@ -44,6 +44,7 @@ public enum ThreadServiceHandler implements ThreadUtils {
 		}
 	};
 	
+	private static ThreadManufactorum manufactorum = new ThreadManufactorum(Thread.NORM_PRIORITY);
 	private static ScheduledExecutorService scheduledService;
 	private static ExecutorService cachedThreadPool;
 }

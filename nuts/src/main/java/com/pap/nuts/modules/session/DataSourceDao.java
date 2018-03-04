@@ -26,9 +26,7 @@ public class DataSourceDao<T> extends JdbcDaoSupport implements DaoLayerParts<St
 	}
 
 	@Override
-	public void update(String value) {
-
-	}
+	public void update(String value) {}
 
 	@Override
 	public String select() {
@@ -38,6 +36,11 @@ public class DataSourceDao<T> extends JdbcDaoSupport implements DaoLayerParts<St
 	@Override
 	public String getAll() {
 		return null;
+	}
+
+	@Override
+	public void execute(String value) {
+		this.getJdbcTemplate().execute(value);
 	}
 
 }

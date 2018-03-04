@@ -4,12 +4,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import org.apache.log4j.Logger;
+import org.springframework.core.env.Environment;
 
 /**
  * 
@@ -19,15 +20,23 @@ import org.apache.log4j.Logger;
 public class ZipExtractService {
 	
 	private static final Logger LOGGER = Logger.getLogger(ZipExtractService.class);
+	private Environment env;
 	
-    public static void extractZipFile() throws IOException{
+	public ZipExtractService(){}
+	
+	public ZipExtractService(Environment env){
+		this.env = env;
+	}
+	
+    public void extractZipFile() throws IOException{
     	LOGGER.info("Starting extracting files from zip...");
-        ZipInputStream zis = new ZipInputStream(new FileInputStream("E:/Development/temp_downloads/bkk_gtfs_new.zip"));
+    	String tempPath = env.getProperty("temp_directory");
+        ZipInputStream zis = new ZipInputStream(new FileInputStream(tempPath+"/bkk_gtfs_new.zip"));
         ZipEntry zipEntry = zis.getNextEntry();
         byte[] buffer = new byte[1024];
         while(zipEntry != null){
             String fileName = zipEntry.getName();
-            File bkkFile = new File("E:/Development/temp_downloads/"+fileName);
+            File bkkFile = new File(tempPath+fileName);
             try(FileOutputStream f = new FileOutputStream(bkkFile)){
                 int len;
                 while ((len = zis.read(buffer)) > 0) {

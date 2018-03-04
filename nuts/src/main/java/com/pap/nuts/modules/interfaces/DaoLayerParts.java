@@ -6,6 +6,7 @@ public interface DaoLayerParts<T> {
 	
 	public void insert(T value);
 	public void update(T value);
+	public void execute(T value);
 	public T select();
 	public T getAll();
 	

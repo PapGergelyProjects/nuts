@@ -10,7 +10,6 @@ import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
@@ -21,6 +20,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.core.env.Environment;
 
 import com.pap.nuts.modules.interfaces.AbstractProcessService;
 import com.pap.nuts.modules.services.threads.ThreadServiceHandler;
@@ -34,7 +34,7 @@ import com.pap.nuts.modules.services.threads.utils.ThreadCache;
 public class VersionHandlerThread extends AbstractProcessService{
 	
 	private final Logger LOGGER = Logger.getLogger(VersionHandlerThread.class);
-	
+	private Environment env;
 	private Predicate<Element> longVal = elem -> {
         try{
             Long.parseLong(elem.text());
@@ -44,9 +44,15 @@ public class VersionHandlerThread extends AbstractProcessService{
         return false;
 	};
 	
+	public VersionHandlerThread(){}
+	
+	public VersionHandlerThread(Environment env){
+		this.env = env;
+	}
+	
 	@Override
 	protected void logic() throws Exception {
-        Document doc = Jsoup.connect("http://bkk.hu/apps/gtfs/").get();
+        Document doc = Jsoup.connect(env.getProperty("data_source_url")).get();
         List<List<String>> mainList = new ArrayList<>();
         Elements trElement = doc.getElementsByTag("tr");
         trElement.stream().forEach(e -> {
@@ -85,10 +91,10 @@ public class VersionHandlerThread extends AbstractProcessService{
 	}
 	
     private void downloadFile(String urlAddress) throws IOException{
-        URL pack = new URL(urlAddress);
+        URL pack = new URL(urlAddress.replace("http", "https"));
         LOGGER.info("Download file from: "+urlAddress);
         try(InputStream in = pack.openStream()){
-            Files.copy(in, Paths.get("E:/Development/temp_downloads/bkk_gtfs_new.zip"), StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(in, Paths.get(env.getProperty("temp_directory")+"/bkk_gtfs_new.zip"), StandardCopyOption.REPLACE_EXISTING);
         }catch(MalformedURLException m){
         	LOGGER.error(m);
         }

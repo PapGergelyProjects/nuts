@@ -18,9 +18,7 @@ public class DataSourceService implements DaoService<String>{
 	}
 
 	@Override
-	public void update(String value) {
-		
-	}
+	public void update(String value) {}
 
 	@Override
 	public String select() {
@@ -30,6 +28,11 @@ public class DataSourceService implements DaoService<String>{
 	@Override
 	public String getAll() {
 		return null;
+	}
+
+	@Override
+	public void execute(String value) {
+		dataSource.execute(value);
 	}
 	
 }
