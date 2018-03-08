@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Radius</title>
+    <link rel="shortcut icon" type="image/png" href="/nuts/img/nuts.png">
+	<link rel="stylesheet" type="text/css" href="/nuts/css/nut_style.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  </head>
+  <body>
+	<h2 id="tit">Stops within the specified range.</h2>
+	<div id="wrap" ng-app="location_finder">
+		<div id="google_map" ng-controller="mapInit"></div>
+		<div id="place_search" ng-controller="place_select_ctrl">
+			<input id="place" class="location_srh" type="text">
+			</br>
+			<p class="location_srh">Latitude: {{lati}}</p>
+			<p class="location_srh">Longitude: {{lng}}</p>
+			<input id="sh_palce" class="location_srh" type="button" value="Search place" ng-click="search();">
+		</div>
+		<div id="ctrl" ng-controller="coordinate_select_ctrl">
+			<label for="lat">Latitude</label>
+			<input id="lat" class="input_f" type="text" name="lat" value={{latitude}}>
+			</br>
+			<label for="lon">Longitude</label>
+			<input id="lon" class="input_f" type="text" name="lon" value={{longnitude}}>
+			</br>
+			<input type="button" value="Set Coordinate" ng-click="setGivenCoordinates();">
+		</div>
+	</div>
+  </body>
+  <script type="text/javascript" src="/nuts/js/nut_app.js"></script>
+  <script type="text/javascript" src="/nuts/js/nut_service.js"></script>
+  <script type="text/javascript" src="/nuts/js/nut_controller.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCI91SGpLQMAy4i5ME_V2_8WvZtg0pJjFU&libraries=places&callback=initMap" async defer></script>
+</html>
