@@ -1,7 +1,7 @@
 DO
 $body$
-begin
-    IF NOT EXISTS(select * from information_schema.schemata WHERE schema_name='bkk') THEN
+BEGIN
+    IF NOT EXISTS(SELECT * FROM information_schema.schemata WHERE schema_name='bkk') THEN
     CREATE SCHEMA bkk
 		CREATE TABLE agency(
 		    id SERIAL PRIMARY KEY,

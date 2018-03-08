@@ -65,9 +65,9 @@ public class VersionHandlerThread extends AbstractProcessService{
         });
         Map<String, LocalDateTime> fileList = mainList.stream().filter(pre -> !pre.isEmpty()).collect(Collectors.toMap(k -> k.get(0), v -> LocalDateTime.parse(v.get(1), DateTimeFormatter.ofPattern("yyyy.MM.dd. HH:mm:ss"))));
         if(ThreadCache.getVersionCache().isEmpty()){
-        	startDownload(doc);
+        	//startDownload(doc);
         	ThreadCache.getVersionCache().putAll(fileList);
-        	ThreadServiceHandler.FIXED.process(new DataUpdateThread());
+        	//ThreadServiceHandler.FIXED.process(new DataUpdateThread()); // TODO: place back, when develop done.
         }else{
         	for(Map.Entry<String, LocalDateTime> pair : fileList.entrySet()){
         		String k = pair.getKey();
@@ -77,6 +77,7 @@ public class VersionHandlerThread extends AbstractProcessService{
         			LOGGER.info(k+" is out of date.");
         			startDownload(doc);
         			ThreadCache.getVersionCache().putAll(fileList);
+        			//ThreadServiceHandler.FIXED.process(new DataUpdateThread());
         			break;
         		}
         	}

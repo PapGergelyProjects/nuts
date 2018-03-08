@@ -37,6 +37,7 @@ public class DataRefiner{
         File[] listOfFiles = new File(tempDirectory).listFiles();
         DataSourceService srvc = NutAppInitializer.getContext().getBean(DataSourceService.class);
         srvc.execute("SELECT clear_tables();");
+        LOGGER.info("Tables cleared.");
         Map<String, TableInsertValues> tableList = Arrays.asList(TableInsertValues.values()).stream().collect(Collectors.toMap(k -> k.getTableName(), v -> v));
         for (File file : listOfFiles) {
             if(file.isFile() && file.getName().contains(".txt")){
@@ -50,7 +51,7 @@ public class DataRefiner{
                 	insert.append("INSERT INTO ").append(tabelName).append(" ");
                 	insert.append(joinedCols).append(" VALUES ");
                 	StringJoiner joinValues = new StringJoiner(",");
-                	int cnt = 10000;
+                	int cnt = 20000; // Optimal for inserts
                 	while(0<cnt){
                 		if(fileContent.size()==0){
                 			break;

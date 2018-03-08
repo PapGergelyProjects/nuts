@@ -1,0 +1,1 @@
+var locationSelector = angular.module('location_finder', []);

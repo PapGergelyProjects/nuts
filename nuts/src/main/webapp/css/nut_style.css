@@ -1,0 +1,44 @@
+body{
+	background-color: #e6f3ff;
+}
+#tit{
+	background-color: #75a3a3;
+}
+#wrap{
+	
+}
+#google_map{
+	position: realtive;
+	float: left;
+	margin-right: 10px;
+	height: 650px;
+	width: 850px;
+}
+#ctrl{
+	position: realtive;
+	text-align: center;
+	height: 130px;
+	width: 200px;
+	border: 1px solid black;
+	margin: 5px;
+	overflow: hidden;
+}
+.input_f{
+	text-align: right;
+	margin-bottom: 10px;
+}
+#place_search{
+	position: relative;
+	text-align: left;
+	border: 1px solid black;
+	height: 120px;
+	width: 520px;
+	overflow: hidden;
+}
+#place{
+	width: 500px;
+	height: 20px;
+}
+.location_srh{
+	margin: 5px;
+}
