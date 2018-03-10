@@ -12,13 +12,6 @@ public class LocationModel {
 	
 	@Bean
 	@Scope("prototype")
-	public StopLocation newStopLocation(){
-		StopLocation location = new StopLocation();
-		location.setStopCoordinate(new Coordinate());
-		return location;
-	}
-	
-	@Bean
 	public StopLocation existsLocation(){
 		StopLocation location = new StopLocation();
 		location.setStopCoordinate(coordinate());
@@ -26,6 +19,7 @@ public class LocationModel {
 	}
 	
 	@Bean
+	@Scope("prototype")
 	public Coordinate coordinate(){
 		return new Coordinate();
 	}

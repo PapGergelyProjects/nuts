@@ -1,5 +1,7 @@
 package com.pap.nuts.modules.session.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,8 +27,10 @@ public class DataSourceService implements DaoService<String>{
 		return null;
 	}
 
+	
 	@Override
-	public String getAll() {
+	public List<String> getAll() {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -34,5 +38,4 @@ public class DataSourceService implements DaoService<String>{
 	public void execute(String value) {
 		dataSource.execute(value);
 	}
-	
 }

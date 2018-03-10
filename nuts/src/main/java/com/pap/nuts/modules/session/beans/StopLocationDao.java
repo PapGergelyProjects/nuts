@@ -1,5 +1,11 @@
 package com.pap.nuts.modules.session.beans;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 
@@ -7,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
+import com.pap.nuts.NutAppInitializer;
 import com.pap.nuts.modules.interfaces.DaoService;
 import com.pap.nuts.modules.model.beans.Coordinate;
 import com.pap.nuts.modules.model.beans.StopLocation;
@@ -39,9 +46,33 @@ public class StopLocationDao extends JdbcDaoSupport implements DaoService<StopLo
 	}
 
 	@Override
-	public StopLocation getAll() {
+	public List<StopLocation> getAll() {
 		return null;
 	}
-
+	
+	public Map<String, Map<Coordinate,List<StopLocation>>> getAllStopWithinRadius(double centerLat, double centerLon, double radius){
+		final String sql = "SELECT * FROM stops_within_radius("+centerLat+","+centerLon+","+radius+") "
+							+ "GROUP BY stop_name, stop_lat, stop_lon, route_name "
+							+ "ORDER BY route_name ";
+		List<Map<String, Object>> resultSet = this.getJdbcTemplate().queryForList(sql);
+		List<StopLocation> stopLocations = new ArrayList<>();
+		resultSet.forEach(res -> {
+			StopLocation location = NutAppInitializer.getContext().getBean("existsLocation",StopLocation.class);
+			location.setStopName(String.valueOf(res.get("stop_name")));
+			location.setRouteName(String.valueOf(res.get("route_name")));
+			location.getStopCoordinate().setLatitude(Double.valueOf(res.get("stop_lat").toString()));
+			location.getStopCoordinate().setLongitude(Double.valueOf(res.get("stop_lon").toString()));
+			stopLocations.add(location);
+		});
+		
+		Map<String, List<StopLocation>> stopNamegroup = stopLocations.stream().collect(Collectors.groupingBy(StopLocation::getStopName));
+		Map<String, Map<Coordinate,List<StopLocation>>> coordGroup = new HashMap<>();
+		stopNamegroup.forEach((k,v) -> {
+			Map<Coordinate, List<StopLocation>> aa = v.stream().collect(Collectors.groupingBy(StopLocation::getStopCoordinate));
+			coordGroup.put(k, aa);
+		});
+		
+		return coordGroup;
+	}
 
 }

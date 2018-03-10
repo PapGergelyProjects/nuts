@@ -74,6 +74,8 @@ public class DataRefiner{
             }
         }
         Files.delete(Paths.get(tempDirectory+"/bkk_gtfs_new.zip"));
+        srvc.execute("REFRESH MATERIALIZED VIEW static_stops;");
+        LOGGER.info("static_stops view refreshed.");
 	}
 	
     private String replaceUselessComma(String rawStr){

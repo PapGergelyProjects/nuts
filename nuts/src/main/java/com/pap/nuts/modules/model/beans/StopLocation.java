@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class StopLocation {
 	
 	private String stopName;
-	private String arrivalTime;
+	private String routeName;
 	private Coordinate stopCoordinate;
 	
 	public String getStopName() {
@@ -16,12 +16,12 @@ public class StopLocation {
 		this.stopName = stopName;
 	}
 	
-	public String getArrivalTime() {
-		return arrivalTime;
+	public String getRouteName() {
+		return routeName;
 	}
 	
-	public void setArrivalTime(String arrivalTime) {
-		this.arrivalTime = arrivalTime;
+	public void setRouteName(String routeName) {
+		this.routeName = routeName;
 	}
 	
 	public Coordinate getStopCoordinate() {
@@ -33,8 +33,46 @@ public class StopLocation {
 	}
 
 	@Override
-	public String toString() {
-		return "Location {stopName=" + stopName + ", arrivalTime=" + arrivalTime + ", stopCoordinate=" + stopCoordinate+"}";
+	public int hashCode() {
+		final int prime = 31;
+		int result = 11;
+		result = prime * result + ((routeName == null) ? 0 : routeName.hashCode());
+		result = prime * result + ((stopCoordinate == null) ? 0 : stopCoordinate.hashCode());
+		result = prime * result + ((stopName == null) ? 0 : stopName.hashCode());
+		return result;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		StopLocation other = (StopLocation) obj;
+		if (routeName == null) {
+			if (other.routeName != null)
+				return false;
+		} else if (!routeName.equals(other.routeName))
+			return false;
+		if (stopCoordinate == null) {
+			if (other.stopCoordinate != null)
+				return false;
+		} else if (!stopCoordinate.equals(other.stopCoordinate))
+			return false;
+		if (stopName == null) {
+			if (other.stopName != null)
+				return false;
+		} else if (!stopName.equals(other.stopName))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "StopLocation[stopName=" + stopName + ", routeName=" + routeName + ", stopCoordinate=" + stopCoordinate+"]";
+	}
+	
 	
 }

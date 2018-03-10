@@ -15,9 +15,9 @@ body{
 	width: 850px;
 }
 #ctrl{
-	position: realtive;
-	text-align: center;
-	height: 130px;
+	position: relative;
+	text-align: left;
+	height: 200px;
 	width: 200px;
 	border: 1px solid black;
 	margin: 5px;
@@ -25,19 +25,23 @@ body{
 }
 .input_f{
 	text-align: right;
+	margin: 5px;
 	margin-bottom: 10px;
 }
 #place_search{
 	position: relative;
 	text-align: left;
 	border: 1px solid black;
-	height: 120px;
+	height: 150px;
 	width: 520px;
 	overflow: hidden;
 }
 #place{
 	width: 500px;
 	height: 20px;
+}
+#rad_loc{
+	width:50px;
 }
 .location_srh{
 	margin: 5px;

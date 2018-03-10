@@ -13,19 +13,20 @@
 		<div id="google_map" ng-controller="mapInit"></div>
 		<div id="place_search" ng-controller="place_select_ctrl">
 			<input id="place" class="location_srh" type="text">
-			</br>
+			<label class="location_srh" for="rad_loc">Radius:</label>
+			<input id="rad_loc" class="location_srh" type="text">
 			<p class="location_srh">Latitude: {{lati}}</p>
 			<p class="location_srh">Longitude: {{lng}}</p>
 			<input id="sh_palce" class="location_srh" type="button" value="Search place" ng-click="search();">
 		</div>
 		<div id="ctrl" ng-controller="coordinate_select_ctrl">
-			<label for="lat">Latitude</label>
+			<label class="input_f" for="lat">Latitude</label>
 			<input id="lat" class="input_f" type="text" name="lat" value={{latitude}}>
-			</br>
-			<label for="lon">Longitude</label>
+			<label class="input_f" for="lon">Longitude</label>
 			<input id="lon" class="input_f" type="text" name="lon" value={{longnitude}}>
-			</br>
-			<input type="button" value="Set Coordinate" ng-click="setGivenCoordinates();">
+			<label class="input_f" for="rad">Radius</label>
+			<input id="rad" class="input_f" type="text" name="rad" value="250">
+			<input class="input_f" type="button" value="Set Coordinate" ng-click="setGivenCoordinates();">
 		</div>
 	</div>
   </body>

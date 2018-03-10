@@ -2,6 +2,9 @@ package com.pap.nuts.modules.session.beans;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
@@ -53,8 +56,24 @@ public class CoordinateDao extends JdbcDaoSupport implements DaoService<Coordina
 	}
 
 	@Override
-	public Coordinate getAll() {
+	public List<Coordinate> getAll() {
+		
 		return null;
 	}
-
+	
+	public List<Coordinate> getRadiusCoordinates(double lat, double lon, int radius){
+		//final String sql = "SELECT lat, lon FROM arcpoints("+lat+","+lon+","+radius+")";
+		final String sql = "SELECT * FROM stops_within_radius("+lat+","+lon+","+radius+")";
+		List<Map<String, Object>> coords = this.getJdbcTemplate().queryForList(sql);
+		List<Coordinate> result = new ArrayList<>();
+		coords.forEach(crd -> {
+			Coordinate crood = new Coordinate();
+			crood.setLatitude(Double.valueOf(crd.get("stop_lat").toString()));
+			crood.setLongitude(Double.valueOf(crd.get("stop_lon").toString()));
+			
+			result.add(crood);
+		});
+		
+		return result;
+	}
 }
