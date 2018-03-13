@@ -62,7 +62,6 @@ public class CoordinateDao extends JdbcDaoSupport implements DaoService<Coordina
 	}
 	
 	public List<Coordinate> getRadiusCoordinates(double lat, double lon, int radius){
-		//final String sql = "SELECT lat, lon FROM arcpoints("+lat+","+lon+","+radius+")";
 		final String sql = "SELECT * FROM stops_within_radius("+lat+","+lon+","+radius+")";
 		List<Map<String, Object>> coords = this.getJdbcTemplate().queryForList(sql);
 		List<Coordinate> result = new ArrayList<>();

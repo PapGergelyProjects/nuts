@@ -22,6 +22,14 @@ import com.pap.nuts.NutAppInitializer;
 import com.pap.nuts.modules.services.data.utils.TableInsertValues;
 import com.pap.nuts.modules.session.service.DataSourceService;
 
+/**
+ * This class is responsible for the gtfs data management.
+ * When the files are ready, this process will read up one by one,
+ * and create an insert script from it.
+ * 
+ * @author Pap Gergely
+ *
+ */
 public class DataRefiner{
 	
 	private Environment env;

@@ -32,13 +32,23 @@ public class MainPage {
 	}
 	
 	@POST
+	@Path("/palce_stop")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public  Map<String, Map<Coordinate,List<StopLocation>>> postMethod(SearchValues post){
+	public  Map<String, Map<Coordinate,List<StopLocation>>> locationWithStop(SearchValues post){
 		System.err.println(post);
 		Coordinate coord = post.getSearchCoordinate();
 		Map<String, Map<Coordinate,List<StopLocation>>> stopLoc = NutAppInitializer.getContext().getBean(StopLocationDao.class).getAllStopWithinRadius(coord.getLatitude(), coord.getLongitude(), post.getRadius());
 		return stopLoc;
+	}
+	
+	
+	@POST
+	@Path("/stop_times")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public String locationWithStopsAndTimes(SearchValues post){
+		return "";
 	}
 	
 }

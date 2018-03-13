@@ -2,31 +2,37 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Radius</title>
+    <title>Nuts</title>
     <link rel="shortcut icon" type="image/png" href="/nuts/img/nuts.png">
 	<link rel="stylesheet" type="text/css" href="/nuts/css/nut_style.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
   </head>
   <body>
-	<h2 id="tit">Stops within the specified range.</h2>
+  	<div id="title_div">
+		<span id="tit">Stops within the specified range.</span>
+  	</div>
 	<div id="wrap" ng-app="location_finder">
 		<div id="google_map" ng-controller="mapInit"></div>
-		<div id="place_search" ng-controller="place_select_ctrl">
-			<input id="place" class="location_srh" type="text">
-			<label class="location_srh" for="rad_loc">Radius:</label>
-			<input id="rad_loc" class="location_srh" type="text">
+		<div id="place_search" class="div_borders" ng-controller="place_select_ctrl">
+			<input id="place" class="location_srh field" type="text">
 			<p class="location_srh">Latitude: {{lati}}</p>
 			<p class="location_srh">Longitude: {{lng}}</p>
-			<input id="sh_palce" class="location_srh" type="button" value="Search place" ng-click="search();">
+			<input id="sh_palce" class="location_srh btn" type="button" value="Search Location" ng-click="search()">
 		</div>
-		<div id="ctrl" ng-controller="coordinate_select_ctrl">
-			<label class="input_f" for="lat">Latitude</label>
-			<input id="lat" class="input_f" type="text" name="lat" value={{latitude}}>
-			<label class="input_f" for="lon">Longitude</label>
-			<input id="lon" class="input_f" type="text" name="lon" value={{longnitude}}>
-			<label class="input_f" for="rad">Radius</label>
-			<input id="rad" class="input_f" type="text" name="rad" value="250">
-			<input class="input_f" type="button" value="Set Coordinate" ng-click="setGivenCoordinates();">
+		<div id="below_search">
+			<div id="coord_search" class="div_borders" ng-controller="coordinate_select_ctrl">
+				<label class="input_f" for="lat">Latitude</label>
+				<input id="lat" class="input_f field" type="text" name="lat" value={{latitude}}>
+				<label class="input_f c" for="lon">Longitude</label>
+				<input id="lon" class="input_f field" type="text" name="lon" value={{longnitude}}>
+				<input class="input_f btn" type="button" value="Set Coordinate" ng-click="setGivenCoordinates()">
+			</div>
+			<div id="utils" class="div_borders" ng-controller="utils_ctrl">
+				<label class="input_f" for="rad">Radius:</label>
+				<input id="rad" class="input_f field" type="text" name="rad" value={{radius}}>
+				</br>
+				<input id="times" class="btn" type="checkbox" value="times">Arrival, departure times
+			</div>
 		</div>
 	</div>
   </body>

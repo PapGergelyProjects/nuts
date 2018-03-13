@@ -2,6 +2,12 @@ package com.pap.nuts.modules.model.beans;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+/**
+ * This class hold a stop location.
+ * 
+ * @author Pap Gergely
+ *
+ */
 public class StopLocation {
 	
 	private String stopName;

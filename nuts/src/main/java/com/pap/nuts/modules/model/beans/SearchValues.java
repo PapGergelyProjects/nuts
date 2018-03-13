@@ -1,5 +1,12 @@
 package com.pap.nuts.modules.model.beans;
 
+/**
+ * This is an utility bean for the http communication.
+ * The client side transmit data to server side with this class.
+ * 
+ * @author Pap Gergely
+ *
+ */
 public class SearchValues {
 	
 	private Coordinate searchCoordinate;

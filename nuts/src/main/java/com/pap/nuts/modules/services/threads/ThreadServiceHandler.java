@@ -8,6 +8,16 @@ import java.util.concurrent.TimeUnit;
 import com.pap.nuts.modules.interfaces.ThreadUtils;
 import com.pap.nuts.modules.services.threads.utils.ThreadManufactorum;
 
+/**
+ * <p>
+ * This enum is responsible for the threading.
+ * With this class you can launch threads with different functionality,
+ * for instance: fixed threads(run once), scheduled(run between the specified interval).
+ * </p>
+ * 
+ * @author Pap Gergely
+ *
+ */
 public enum ThreadServiceHandler implements ThreadUtils {
 	
 	FIXED {

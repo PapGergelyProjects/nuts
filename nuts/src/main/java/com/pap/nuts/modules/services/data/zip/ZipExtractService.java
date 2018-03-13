@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 import org.springframework.core.env.Environment;
 
 /**
+ * This class is responsible for the gtfs zip archive extraction.
  * 
  * @author Pap Gergely
  *

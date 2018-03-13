@@ -27,6 +27,8 @@ import com.pap.nuts.modules.services.threads.ThreadServiceHandler;
 import com.pap.nuts.modules.services.threads.utils.ThreadCache;
 
 /**
+ * Check the gtfs content version and proceed the download when it's needed.
+ * When new version is ready, this process will download the zip archive and store the latest versions of the data.
  * 
  * @author Pap Gergely
  *

@@ -6,6 +6,12 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.WeakHashMap;
 
+/**
+ * This class store the executed thread's name, which with can track the current tasks.
+ * 
+ * @author Pap Gergely
+ *
+ */
 public class ThreadCache {
 	
 	private static volatile WeakHashMap<Thread, Void> threadCache = new WeakHashMap<>();

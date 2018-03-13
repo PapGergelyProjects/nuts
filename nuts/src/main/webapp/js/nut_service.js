@@ -12,7 +12,7 @@ locationSelector.service('setLocation', function(){
 		let coordMarker = new google.maps.Marker({
 			position:{lat:coordinate['latitude'], lng:coordinate['longitude']},
 			map: map,
-			title: 'Given coord'
+			title: 'Center'
 		});
 		markerStorage.push(coordMarker);
 		instance.showStopCoordinates(stopCoordinates);
@@ -55,7 +55,8 @@ locationSelector.service('setLocation', function(){
 						title: routStr.join()
 					});
 					stopCoordMarker.addListener('click', function(){
-						let text = key+": "+routStr.join()
+						let routes = routStr.join();
+						let text = " <div id=\"content\"> <p><b>"+key+"</b></p> <p>"+routes.replace(/,/g,", ")+"</p> </div>";
 						let infoWindow = new google.maps.InfoWindow({
 							content:text
 						});

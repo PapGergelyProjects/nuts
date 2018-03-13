@@ -68,8 +68,8 @@ public class StopLocationDao extends JdbcDaoSupport implements DaoService<StopLo
 		Map<String, List<StopLocation>> stopNamegroup = stopLocations.stream().collect(Collectors.groupingBy(StopLocation::getStopName));
 		Map<String, Map<Coordinate,List<StopLocation>>> coordGroup = new HashMap<>();
 		stopNamegroup.forEach((k,v) -> {
-			Map<Coordinate, List<StopLocation>> aa = v.stream().collect(Collectors.groupingBy(StopLocation::getStopCoordinate));
-			coordGroup.put(k, aa);
+			Map<Coordinate, List<StopLocation>> coordinateGroup = v.stream().collect(Collectors.groupingBy(StopLocation::getStopCoordinate));
+			coordGroup.put(k, coordinateGroup);
 		});
 		
 		return coordGroup;

@@ -1,5 +1,12 @@
 package com.pap.nuts.modules.model.beans;
 
+/**
+ * This class represents a coordinate.
+ * Mainly use in other classes
+ * 
+ * @author Pap Gergely
+ *
+ */
 public class Coordinate {
 	
 	private double latitude;

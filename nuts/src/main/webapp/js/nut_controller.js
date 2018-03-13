@@ -17,7 +17,7 @@ locationSelector.controller('mapInit', function($scope, $window){
 		});
 		
 		var searchBox = new google.maps.places.SearchBox(getById('place'));
-
+		
 		$window.map = map;
 		$window.searchBox = searchBox;
 	}
@@ -26,11 +26,11 @@ locationSelector.controller('mapInit', function($scope, $window){
 locationSelector.controller('place_select_ctrl', function($scope, $http, setLocation){
 	$scope.search = function(){
 		let coordinates = searchBox.getPlaces()[0].geometry.location;
-		let radius = Number(getById('rad_loc').value);
+		let radius = Number(getById('rad').value);
 		let json = {radius:radius, searchCoordinate:{latitude:coordinates.lat(), longitude:coordinates.lng()}}
 		$scope.lati = coordinates.lat();
 		$scope.lng = coordinates.lng();
-		$http.post('/nuts/radius/', json).then(function(reponse){
+		$http.post('/nuts/radius/palce_stop', json).then(function(reponse){
 			setLocation.setCoordinates(json['searchCoordinate'], reponse['data'], radius);
 		}, function(reponse){
 			console.log(reponse);//error
@@ -39,18 +39,21 @@ locationSelector.controller('place_select_ctrl', function($scope, $http, setLoca
 });
 
 locationSelector.controller('coordinate_select_ctrl', function($scope, $http, setLocation){
-	$scope.latitude = 47.434367;
-	$scope.longnitude = 19.160911;
+	$scope.latitude = 47.497912;
+	$scope.longnitude = 19.040235;
 	$scope.setGivenCoordinates = function() {
 		let lat = Number(getById('lat').value);
 		let lng = Number(getById('lon').value);
 		let radius = Number(getById('rad').value);
 		let json = {radius:radius, searchCoordinate:{latitude:lat, longitude:lng}};
-		$http.post('/nuts/radius/', json).then(function(reponse){
-			console.log(reponse['data']);
+		$http.post('/nuts/radius/palce_stop', json).then(function(reponse){
 			setLocation.setCoordinates(json['searchCoordinate'], reponse['data'], radius);
 		}, function(reponse){
 			console.log(reponse);//error
 		});
 	};
+});
+
+locationSelector.controller('utils_ctrl', function($scope){
+	$scope.radius=500;
 });
