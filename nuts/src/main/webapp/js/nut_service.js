@@ -1,7 +1,7 @@
 var circleStorage = [];
 var markerStorage = [];
 var stopMarkerStorage = [];
-locationSelector.service('setLocation', function(){
+locationSelector.service('setLocation', function(stopUtils){
 	var instance = this;
 	this.setCoordinates = function(coordinate, stopCoordinates, r){
 		let newCoord = new google.maps.LatLng(coordinate['latitude'], coordinate['longitude']);
@@ -43,10 +43,10 @@ locationSelector.service('setLocation', function(){
 				for (let coordKey in coordMap){
 					let routStr = [];
 					let stopList = coordMap[coordKey];
+					stopCoords = stopList[0]['stopCoordinate'];
 					for(let i=0; i<stopList.length; i++){
 						let locationStruct = stopList[i];
 						routStr.push(locationStruct['routeName']);
-						stopCoords = locationStruct['stopCoordinate'];
 					}
 					let stopCoordMarker = new google.maps.Marker({
 						position:{lat:Number(stopCoords['latitude']), lng:Number(stopCoords['longitude'])},
@@ -56,7 +56,12 @@ locationSelector.service('setLocation', function(){
 					});
 					stopCoordMarker.addListener('click', function(){
 						let routes = routStr.join();
-						let text = " <div id=\"content\"> <p><b>"+key+"</b></p> <p>"+routes.replace(/,/g,", ")+"</p> </div>";
+						let text = document.createElement("div");
+						text.appendChild(stopUtils.stopName(stopList[0]['stopName']));
+						text.appendChild(stopUtils.stopDistance(stopList[0]['stopDistance']));
+						for(let route of stopUtils.stopRoutes(stopList)){
+							text.appendChild(route);
+						}
 						let infoWindow = new google.maps.InfoWindow({
 							content:text
 						});
@@ -81,3 +86,40 @@ locationSelector.service('setLocation', function(){
 		}
 	}
 });
+
+locationSelector.service('stopUtils', function(){
+	
+	this.stopName = function(stopNam){
+		let par = document.createElement("p");
+		let bol = document.createElement("b");
+		let text = document.createTextNode(stopNam);
+		bol.appendChild(text);
+		par.appendChild(bol);
+		
+		return par;
+	}
+	
+	this.stopDistance = function(dist){
+		let par = document.createElement("p");
+		let text = document.createTextNode("Distance from origo: "+dist+" m");
+		par.appendChild(text);
+		
+		return par;
+	}
+
+	this.stopRoutes = function*(stopList){
+		for(let i=0; i<stopList.length; i++){
+			let locationStruct = stopList[i];
+			let routeDiv = document.createElement("div");
+			routeDiv.setAttribute("class","route_sign");
+			routeDiv.setAttribute("style","color:#"+locationStruct['stopTextColor']+"; background-color:#"+locationStruct['stopColor']+";");
+			let rou = document.createTextNode(locationStruct['routeName']);
+			routeDiv.appendChild(rou);
+			
+			yield routeDiv;
+		}
+	}
+	
+});
+
+

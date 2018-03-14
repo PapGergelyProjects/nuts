@@ -105,3 +105,14 @@ body{
     border: 2px solid #bb99ff;
     padding: 5px; 
 }
+.route_sign{
+	position: relative;
+    float: left;
+	text-align: center;
+    vertical-align: middle;
+    padding-top: 2px;
+	width:30px;
+    height: 20px;
+    overflow: hidden;
+    margin: 5px;
+}

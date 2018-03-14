@@ -32,7 +32,7 @@ public class MainPage {
 	}
 	
 	@POST
-	@Path("/palce_stop")
+	@Path("/stop_location")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public  Map<String, Map<Coordinate,List<StopLocation>>> locationWithStop(SearchValues post){

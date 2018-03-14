@@ -1,5 +1,5 @@
 CREATE MATERIALIZED VIEW IF NOT EXISTS static_stops AS 
-SELECT route_short_name, stop_name, stop_lat, stop_lon
+SELECT route_short_name, stop_name, stop_lat, stop_lon, route_color, route_text_color
 FROM trips t
 INNER JOIN calendar_dates USING(service_id)
 INNER JOIN routes USING(route_id)
@@ -9,7 +9,7 @@ INNER JOIN (
     FROM stop_times
     INNER JOIN stops USING(stop_id)
 ) s USING(trip_id)
-GROUP BY route_short_name, stop_sequence, stop_name, stop_lat, stop_lon
+GROUP BY route_short_name, stop_sequence, stop_name, stop_lat, stop_lon, route_color, route_text_color
 ORDER BY route_short_name;
 
 CREATE INDEX IF NOT EXISTS lat_lng_idx ON static_stops (stop_lat, stop_lon);
