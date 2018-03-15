@@ -58,4 +58,15 @@ locationSelector.controller('coordinate_select_ctrl', function($scope, $http, se
 
 locationSelector.controller('utils_ctrl', function($scope){
 	$scope.radius=500;
+	$scope.checkValue = function(){
+		if(Number(getById('rad').value) > 5000){
+			$scope.error_msg = "The radius of the circle has reached a critical size, please give a lower one.";
+			getById('sh_palce').disabled=true;
+			getById('coord_search_btn').disabled=true;
+		}else{
+			$scope.error_msg = "";
+			getById('sh_palce').disabled=false;
+			getById('coord_search_btn').disabled=false;
+		}
+	}
 });

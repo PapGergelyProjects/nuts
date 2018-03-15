@@ -54,11 +54,12 @@ body{
 #utils{
 	position: block;
 	text-align: left;
-	height: 80px;
+	height: 85px;
 	width: 200px;
 	background: rgba(179, 179, 204, .9);
 	margin-bottom: 5px;
 	overflow: hidden;
+	overflow-y: auto;
 }
 .div_borders{
     border-radius: 10px;
@@ -106,6 +107,9 @@ label, .location_srh.par{
 .btn:hover{
     background-color: #4da6ff;
     color: white;
+}
+.btn:disabled{
+	background-color: #999999;
 }
 .field{
     border-radius: 5px;
@@ -162,4 +166,8 @@ label, .location_srh.par{
     border: solid white;
     border-width: 0 3px 3px 0;
     transform: rotate(45deg);
+}
+.error_msg{
+	font-size: 14px;
+	color: red;
 }

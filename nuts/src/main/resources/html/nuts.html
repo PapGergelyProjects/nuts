@@ -25,12 +25,13 @@
 				<input id="lat" class="input_f field" type="text" name="lat" value={{latitude}}>
 				<label class="input_f c" for="lon">Longitude</label>
 				<input id="lon" class="input_f field" type="text" name="lon" value={{longnitude}}>
-				<input class="input_f btn" type="button" value="Set Coordinate" ng-click="setGivenCoordinates()">
+				<input id="coord_search_btn" class="input_f btn" type="button" value="Set Coordinate" ng-click="setGivenCoordinates()">
 			</div>
 		</div>
 		<div id="utils" class="div_borders" ng-controller="utils_ctrl">
 			<label class="input_f" for="rad">Radius(m):</label>
-			<input id="rad" class="input_f field" type="text" name="rad" value={{radius}}>
+			<input id="rad" class="input_f field" type="text" name="rad" ng-model="radius" ng-change="checkValue()">
+			<p class="error_msg">{{error_msg}}</p>
 			<label class="check_input">&nbsp Departure times
 				<input id="times" class="btn" type="checkbox" value="times">
 				<span class="checked"></span>
