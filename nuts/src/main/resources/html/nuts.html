@@ -9,17 +9,17 @@
   </head>
   <body>
   	<div id="title_div">
-		<span id="tit">Stops within the specified range.</span>
+		<span id="tit">Stops Within The Specified Range</span>
   	</div>
 	<div id="wrap" ng-app="location_finder">
 		<div id="google_map" ng-controller="mapInit"></div>
-		<div id="place_search" class="div_borders" ng-controller="place_select_ctrl">
-			<input id="place" class="location_srh field" type="text">
-			<p class="location_srh">Latitude: {{lati}}</p>
-			<p class="location_srh">Longitude: {{lng}}</p>
-			<input id="sh_palce" class="location_srh btn" type="button" value="Search Location" ng-click="search()">
-		</div>
 		<div id="below_search">
+			<div id="place_search" class="div_borders" ng-controller="place_select_ctrl">
+				<input id="place" class="location_srh field" type="text" placeholder="Give a location">
+				<p class="location_srh par">Latitude: {{lati}}</p>
+				<p class="location_srh par">Longitude: {{lng}}</p>
+				<input id="sh_palce" class="location_srh btn" type="button" value="Search Location" ng-click="search()">
+			</div>
 			<div id="coord_search" class="div_borders" ng-controller="coordinate_select_ctrl">
 				<label class="input_f" for="lat">Latitude</label>
 				<input id="lat" class="input_f field" type="text" name="lat" value={{latitude}}>
@@ -27,12 +27,14 @@
 				<input id="lon" class="input_f field" type="text" name="lon" value={{longnitude}}>
 				<input class="input_f btn" type="button" value="Set Coordinate" ng-click="setGivenCoordinates()">
 			</div>
-			<div id="utils" class="div_borders" ng-controller="utils_ctrl">
-				<label class="input_f" for="rad">Radius:</label>
-				<input id="rad" class="input_f field" type="text" name="rad" value={{radius}}>
-				</br>
-				<input id="times" class="btn" type="checkbox" value="times">Arrival, departure times
-			</div>
+		</div>
+		<div id="utils" class="div_borders" ng-controller="utils_ctrl">
+			<label class="input_f" for="rad">Radius(m):</label>
+			<input id="rad" class="input_f field" type="text" name="rad" value={{radius}}>
+			<label class="check_input">&nbsp Departure times
+				<input id="times" class="btn" type="checkbox" value="times">
+				<span class="checked"></span>
+			</label>
 		</div>
 	</div>
   </body>

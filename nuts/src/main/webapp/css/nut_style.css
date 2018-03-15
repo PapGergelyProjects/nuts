@@ -1,5 +1,7 @@
 body{
-	background-color: white;
+	background-image: url("/nuts/img/bakcground_bus.jpg");
+	background-repeat: no-repeat;
+	background-size: 1920px 1080px;
 }
 #title_div{
 	text-align: left;
@@ -7,8 +9,7 @@ body{
 	padding-top: 20px;
 	padding-left: 5px;
 	height: 40px;
-	background-color: #0080ff;
-	margin-top: 2px;
+	background: rgba(102, 179, 255, .9);
 	margin-bottom: 10px;
 }
 #tit{
@@ -25,7 +26,7 @@ body{
 	margin-right: 10px;
 	height: 780px;
 	width: 1240px;
-	border: 2px dashed #046ca3;
+	border: 3px solid #b3b3cc;/*dashed*/
 	border-radius: 5px;
     box-shadow: inset 0 -1px 0 0 #046ca3, inset 0 1px 0 0 #046ca3, 0 1px 0 0 #046ca3, 0 -1px 0 0 #046ca3;
 	margin-bottom: 1px;
@@ -36,29 +37,32 @@ body{
 #place_search{
 	position: relative;
 	text-align: left;
-	height: 120px;
-	width: 520px;
+	height: 130px;
+	width: 320px;
+	background: rgba(179, 179, 204, .9);
+	margin-bottom: 5px;
 	overflow: hidden;
 }
 #coord_search{
-	float: left;
-	text-align: left;
+	position: relative;
 	height: 160px;
 	width: 200px;
-	margin: 5px;
+	background: rgba(179, 179, 204, .9);
+	margin-bottom: 5px;
 	overflow: hidden;
 }
 #utils{
-	float: left;
+	position: block;
 	text-align: left;
-	height: 150px;
+	height: 80px;
 	width: 200px;
-	margin: 5px;
+	background: rgba(179, 179, 204, .9);
+	margin-bottom: 5px;
 	overflow: hidden;
 }
 .div_borders{
     border-radius: 10px;
-    border: 2px solid #bfbfbf;
+    border: 3px solid #8c8c8c;
     padding: 10px;
 }
 .input_f{
@@ -67,8 +71,11 @@ body{
 	margin-bottom: 10px;
 	overflow: hidden;
 }
+label, .location_srh.par{
+	color: #cce6ff;
+}
 #place{
-	width: 500px;
+	width: 300px;
 	height: 20px;
 }
 #rad{
@@ -81,7 +88,7 @@ body{
     background-color: #008CBA;
     border: none;
     color: white;
-    padding: 2px 2px;
+    padding: 5px 10px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -102,7 +109,7 @@ body{
 }
 .field{
     border-radius: 5px;
-    border: 2px solid #bb99ff;
+    border: 2px solid #a3a3c2;
     padding: 5px; 
 }
 .route_sign{
@@ -115,4 +122,44 @@ body{
     height: 20px;
     overflow: hidden;
     margin: 5px;
+}
+.check_input{
+    display: block;
+    position: relative;
+    padding-left: 15px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    user-select: none;
+}
+.check_input input{
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+.check_input:hover input ~ .checked{
+	background-color: #ccc;
+}
+.check_input input:checked ~ .checked{
+	background-color: #2196F3;
+}
+.checked{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 15px;
+    width: 15px;
+    background-color: #eee;
+}
+.check_input input:checked .checked:after{
+	display: block;
+}
+.check_input .checked:after{
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
 }

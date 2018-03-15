@@ -30,7 +30,8 @@ locationSelector.controller('place_select_ctrl', function($scope, $http, setLoca
 		let json = {radius:radius, searchCoordinate:{latitude:coordinates.lat(), longitude:coordinates.lng()}}
 		$scope.lati = coordinates.lat();
 		$scope.lng = coordinates.lng();
-		$http.post('/nuts/radius/stop_location', json).then(function(reponse){
+		let service = getById('times').checked ? $http.post('/nuts/radius/stop_times', json) : $http.post('/nuts/radius/stop_location', json);
+		service.then(function(reponse){
 			setLocation.setCoordinates(json['searchCoordinate'], reponse['data'], radius);
 		}, function(reponse){
 			console.log(reponse);//error
@@ -46,7 +47,8 @@ locationSelector.controller('coordinate_select_ctrl', function($scope, $http, se
 		let lng = Number(getById('lon').value);
 		let radius = Number(getById('rad').value);
 		let json = {radius:radius, searchCoordinate:{latitude:lat, longitude:lng}};
-		$http.post('/nuts/radius/stop_location', json).then(function(reponse){
+		let service = getById('times').checked ? $http.post('/nuts/radius/stop_times', json) : $http.post('/nuts/radius/stop_location', json);
+		service.then(function(reponse){
 			setLocation.setCoordinates(json['searchCoordinate'], reponse['data'], radius);
 		}, function(reponse){
 			console.log(reponse);//error
