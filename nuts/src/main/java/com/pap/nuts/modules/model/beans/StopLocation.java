@@ -1,5 +1,7 @@
 package com.pap.nuts.modules.model.beans;
 
+import java.util.Arrays;
+
 /**
  * This bean is hold a stop location.
  * The properties of the bean represents a valid location.
@@ -14,6 +16,7 @@ public class StopLocation {
 	private double stopDistance;
 	private String stopColor;
 	private String stopTextColor;
+	private String[] departureTime; // TODO: if needed, it can be LocalTime, but for now String is adequate.
 	private Coordinate stopCoordinate;
 	
 	public String getStopName() {
@@ -46,6 +49,12 @@ public class StopLocation {
 	public void setStopTextColor(String stopTextColor) {
 		this.stopTextColor = stopTextColor;
 	}
+	public String[] getDepartureTime() {
+		return departureTime;
+	}
+	public void setDepartureTime(String[] departureTime) {
+		this.departureTime = departureTime;
+	}
 	public Coordinate getStopCoordinate() {
 		return stopCoordinate;
 	}
@@ -55,8 +64,9 @@ public class StopLocation {
 	
 	@Override
 	public int hashCode() {
-		final int prime = 71;
-		int result = 13;
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Arrays.hashCode(departureTime);
 		result = prime * result + ((routeName == null) ? 0 : routeName.hashCode());
 		result = prime * result + ((stopColor == null) ? 0 : stopColor.hashCode());
 		result = prime * result + ((stopCoordinate == null) ? 0 : stopCoordinate.hashCode());
@@ -67,6 +77,7 @@ public class StopLocation {
 		result = prime * result + ((stopTextColor == null) ? 0 : stopTextColor.hashCode());
 		return result;
 	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -76,6 +87,8 @@ public class StopLocation {
 		if (getClass() != obj.getClass())
 			return false;
 		StopLocation other = (StopLocation) obj;
+		if (!Arrays.equals(departureTime, other.departureTime))
+			return false;
 		if (routeName == null) {
 			if (other.routeName != null)
 				return false;
@@ -105,10 +118,11 @@ public class StopLocation {
 			return false;
 		return true;
 	}
+	
 	@Override
 	public String toString() {
 		return "StopLocation [stopName=" + stopName + ", routeName=" + routeName + ", stopDistance=" + stopDistance
-				+ ", stopColor=" + stopColor + ", stopTextColor=" + stopTextColor + ", stopCoordinate=" + stopCoordinate
-				+ "]";
+				+ ", stopColor=" + stopColor + ", stopTextColor=" + stopTextColor + ", departureTime="
+				+ Arrays.toString(departureTime) + ", stopCoordinate=" + stopCoordinate + "]";
 	}
 }

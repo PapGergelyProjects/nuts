@@ -28,9 +28,11 @@ public class DatabaseInit {
 		Resource tableClear = resourceLoad.getResource("classpath:sql/clear_tables.sql");
 		Resource arcPoints = resourceLoad.getResource("classpath:sql/arcpoints.sql");
 		Resource staticStops = resourceLoad.getResource("classpath:sql/m_view_static_stops.sql");
+		Resource staticStopsTimes = resourceLoad.getResource("classpath:sql/m_view_static_stops_with_times.sql");
 		Resource stopWithinRange = resourceLoad.getResource("classpath:sql/stops_within_radius.sql");
+		Resource stopWithinRangeTime = resourceLoad.getResource("classpath:sql/stops_and_times_within_radius.sql");
 		
-		ResourceDatabasePopulator dataPop = new ResourceDatabasePopulator(initSchema, tableClear, arcPoints, staticStops, stopWithinRange);
+		ResourceDatabasePopulator dataPop = new ResourceDatabasePopulator(initSchema, tableClear, arcPoints, staticStops, staticStopsTimes, stopWithinRange, stopWithinRangeTime);
 		dataPop.setSeparator("^;");
 		DatabasePopulatorUtils.execute(dataPop, dataSource);
 	}

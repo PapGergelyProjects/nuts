@@ -12,6 +12,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+import org.apache.log4j.Logger;
+
 import com.pap.nuts.NutAppInitializer;
 import com.pap.nuts.modules.model.beans.Coordinate;
 import com.pap.nuts.modules.model.beans.SearchValues;
@@ -23,6 +25,7 @@ import com.pap.nuts.utils.ResourceReader;
 @Path("/")
 public class MainPage {
 	
+	private final Logger LOGGER = Logger.getLogger(MainPage.class);
 	
 	@GET
 	@Produces(MediaType.TEXT_HTML)
@@ -36,9 +39,10 @@ public class MainPage {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public  Map<String, Map<Coordinate,List<StopLocation>>> locationWithStop(SearchValues post){
-		System.err.println(post);
+		LOGGER.info(post);
 		Coordinate coord = post.getSearchCoordinate();
 		Map<String, Map<Coordinate,List<StopLocation>>> stopLoc = NutAppInitializer.getContext().getBean(StopLocationDao.class).getAllStopWithinRadius(coord.getLatitude(), coord.getLongitude(), post.getRadius());
+		
 		return stopLoc;
 	}
 	
@@ -47,8 +51,12 @@ public class MainPage {
 	@Path("/stop_times")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public String locationWithStopsAndTimes(SearchValues post){
-		return "";
+	public Map<String, Map<Coordinate,List<StopLocation>>> locationWithStopsAndTimes(SearchValues post){
+		LOGGER.info(post);
+		Coordinate coord = post.getSearchCoordinate();
+		Map<String, Map<Coordinate,List<StopLocation>>> stopLocTimes = NutAppInitializer.getContext().getBean(StopLocationDao.class).getAllStopWithinRadiusWithTime(coord.getLatitude(), coord.getLongitude(), post.getRadius());
+		
+		return stopLocTimes;
 	}
 	
 }

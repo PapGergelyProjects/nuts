@@ -49,6 +49,7 @@ locationSelector.controller('coordinate_select_ctrl', function($scope, $http, se
 		let json = {radius:radius, searchCoordinate:{latitude:lat, longitude:lng}};
 		let service = getById('times').checked ? $http.post('/nuts/radius/stop_times', json) : $http.post('/nuts/radius/stop_location', json);
 		service.then(function(reponse){
+			console.log(reponse['data']);
 			setLocation.setCoordinates(json['searchCoordinate'], reponse['data'], radius);
 		}, function(reponse){
 			console.log(reponse);//error
@@ -60,7 +61,7 @@ locationSelector.controller('utils_ctrl', function($scope){
 	$scope.radius=500;
 	$scope.checkValue = function(){
 		if(Number(getById('rad').value) > 5000){
-			$scope.error_msg = "The radius of the circle has reached a critical size, please give a lower one.";
+			$scope.error_msg = "The radius can be 5000 m, please give a lower one.";
 			getById('sh_palce').disabled=true;
 			getById('coord_search_btn').disabled=true;
 		}else{

@@ -1,7 +1,7 @@
 var circleStorage = [];
 var markerStorage = [];
 var stopMarkerStorage = [];
-locationSelector.service('setLocation', function(stopUtils){
+locationSelector.service('setLocation', function(stopCoordinatesAssembler){
 	var instance = this;
 	this.setCoordinates = function(coordinate, stopCoordinates, r){
 		let newCoord = new google.maps.LatLng(coordinate['latitude'], coordinate['longitude']);
@@ -15,7 +15,7 @@ locationSelector.service('setLocation', function(stopUtils){
 			title: 'Center'
 		});
 		markerStorage.push(coordMarker);
-		instance.showStopCoordinates(stopCoordinates);
+		stopCoordinatesAssembler.showStopCoordinates(stopCoordinates);
 		instance.addCircle(coordinate['latitude'], coordinate['longitude'], r);
 	}
 	
@@ -35,6 +35,22 @@ locationSelector.service('setLocation', function(stopUtils){
 		circleStorage.push(circle);
 	}
 	
+	this.clearMarkers = function(){
+		if(0<markerStorage.length){
+			for(let i=0; i<markerStorage.length; i++){
+				markerStorage[i].setMap(null);
+			}
+		}
+		if(0<stopMarkerStorage.length){
+			for(let i=0; i<stopMarkerStorage.length; i++){
+				stopMarkerStorage[i].setMap(null);
+			}
+		}
+	}
+});
+
+locationSelector.service('stopCoordinatesAssembler', function(){
+	var instance = this;
 	this.showStopCoordinates = function(stopCoordinates){
 		if(stopCoordinates!=null){
 			for(let key in stopCoordinates){
@@ -52,14 +68,14 @@ locationSelector.service('setLocation', function(stopUtils){
 						position:{lat:Number(stopCoords['latitude']), lng:Number(stopCoords['longitude'])},
 						map: map,
 						icon: '/nuts/img/marker_blue.png',
-						title: routStr.join()
+						title: stopList[0]['stopName']
 					});
 					stopCoordMarker.addListener('click', function(){
-						let routes = routStr.join();
 						let text = document.createElement("div");
-						text.appendChild(stopUtils.stopName(stopList[0]['stopName']));
-						text.appendChild(stopUtils.stopDistance(stopList[0]['stopDistance']));
-						for(let route of stopUtils.stopRoutes(stopList)){
+						text.appendChild(instance.stopName(stopList[0]['stopName']));
+						text.appendChild(instance.stopDistance(stopList[0]['stopDistance']));
+						let iterCollection = getById('times').checked ? instance.stopRoutesAndTimes(stopList) : instance.stopRoutes(stopList);
+						for(let route of iterCollection){
 							text.appendChild(route);
 						}
 						let infoWindow = new google.maps.InfoWindow({
@@ -72,22 +88,6 @@ locationSelector.service('setLocation', function(stopUtils){
 			}
 		}
 	}
-	
-	this.clearMarkers = function(){
-		if(0<markerStorage.length){
-			for(let i=0; i<markerStorage.length; i++){
-				markerStorage[i].setMap(null);
-			}
-		}
-		if(0<stopMarkerStorage.length){
-			for(let i=0; i<stopMarkerStorage.length; i++){
-				stopMarkerStorage[i].setMap(null);
-			}
-		}
-	}
-});
-
-locationSelector.service('stopUtils', function(){
 	
 	this.stopName = function(stopNam){
 		let par = document.createElement("p");
@@ -117,6 +117,40 @@ locationSelector.service('stopUtils', function(){
 			routeDiv.appendChild(rou);
 			
 			yield routeDiv;
+		}
+	}
+	
+	this.stopRoutesAndTimes = function*(stopList){
+		for(let i=0; i<stopList.length; i++){
+			let locationStruct = stopList[i];
+			let stopTimeDiv = document.createElement("div");
+			stopTimeDiv.setAttribute("class","stop_times");
+			
+			let routeDiv = document.createElement("div");
+			routeDiv.setAttribute("class","route_sign");
+			routeDiv.setAttribute("style","color:#"+locationStruct['stopTextColor']+"; background-color:#"+locationStruct['stopColor']+";");
+			let rou = document.createTextNode(locationStruct['routeName']);
+			routeDiv.appendChild(rou);
+			stopTimeDiv.appendChild(routeDiv);
+			
+			let routeTimes = document.createElement("div");
+			routeTimes.setAttribute("class","route_times");
+			
+			let departTimes = stopList[i]['departureTime'];
+			if(departTimes.length==1 && departTimes[0].length == 0){
+				let spanTime = document.createElement("span");
+				spanTime.appendChild(document.createTextNode("n/a"));
+				routeTimes.appendChild(spanTime);
+			}else{
+				for(let time in departTimes){
+					let spanTime = document.createElement("span");
+					spanTime.appendChild(document.createTextNode("| "+departTimes[time].substring(0,5)+" |"));
+					routeTimes.appendChild(spanTime);
+				}
+			}
+			stopTimeDiv.appendChild(routeTimes);
+			
+			yield stopTimeDiv;
 		}
 	}
 	

@@ -9,7 +9,7 @@ body{
 	padding-top: 20px;
 	padding-left: 5px;
 	height: 40px;
-	background: rgba(102, 179, 255, .9);
+	background: rgba(0, 102, 255, .9);
 	margin-bottom: 10px;
 }
 #tit{
@@ -24,11 +24,11 @@ body{
 	position: realtive;
 	float: left;
 	margin-right: 10px;
-	height: 780px;
-	width: 1240px;
+	height: 800px;
+	width: 1280px;
 	border: 3px solid #b3b3cc;/*dashed*/
 	border-radius: 5px;
-    box-shadow: inset 0 -1px 0 0 #046ca3, inset 0 1px 0 0 #046ca3, 0 1px 0 0 #046ca3, 0 -1px 0 0 #046ca3;
+    box-shadow: inset 0 -1px 0 0 #d1d1e0, inset 0 1px 0 0 #d1d1e0, 0 1px 0 0 #d1d1e0, 0 -1px 0 0 #d1d1e0;
 	margin-bottom: 1px;
 }
 #below_search{
@@ -73,7 +73,8 @@ body{
 	overflow: hidden;
 }
 label, .location_srh.par{
-	color: #cce6ff;
+	color: #f0f0f5;
+	font-weight: bold;
 }
 #place{
 	width: 300px;
@@ -126,6 +127,22 @@ label, .location_srh.par{
     height: 20px;
     overflow: hidden;
     margin: 5px;
+}
+.route_times{
+    float: left;
+    border-radius: 3px;
+    border: 1px solid #5c8a8a;
+	text-align: center;
+    vertical-align: middle;
+    margin: 5px;
+    padding-top: 2px;
+    padding-left: 2px;
+    padding-right: 2px;
+    overflow: hidden;
+}
+.stop_times{
+	position: block;
+    overflow: hidden;
 }
 .check_input{
     display: block;
