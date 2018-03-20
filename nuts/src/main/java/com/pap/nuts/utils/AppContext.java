@@ -8,11 +8,15 @@ import javax.servlet.ServletContextListener;
 import org.apache.log4j.Logger;
 
 import com.pap.nuts.NutAppInitializer;
-import com.pap.nuts.modules.services.data.convert.DataRefiner;
 import com.pap.nuts.modules.services.threads.ThreadServiceHandler;
-import com.pap.nuts.modules.services.threads.processes.MonitorRunningProcessDebug;
 import com.pap.nuts.modules.services.threads.processes.VersionHandlerThread;
 
+/**
+ * This is where everything begins, the appcontext launch the whole application, init Spring, and the data updater/downloader.
+ * 
+ * @author Pap Gergely
+ *
+ */
 public class AppContext implements ServletContextListener {
 	
 	private final Logger LOGGER = Logger.getLogger(AppContext.class);
@@ -28,7 +32,7 @@ public class AppContext implements ServletContextListener {
 		LOGGER.info("Nuts has been initialized!");
 		NutAppInitializer.initApp();
 		NutAppInitializer.getContext().getBean(DatabaseInit.class);
-		ThreadServiceHandler.SCHEDULED.process(1, TimeUnit.HOURS, NutAppInitializer.getContext().getBean("versionOverwatch", VersionHandlerThread.class));
+		ThreadServiceHandler.SCHEDULED.process(0, 1, TimeUnit.DAYS, "version_overwatch", NutAppInitializer.getContext().getBean("versionOverwatch", VersionHandlerThread.class));
 	}
 	
 }

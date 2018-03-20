@@ -18,6 +18,7 @@ import com.pap.nuts.NutAppInitializer;
 import com.pap.nuts.modules.model.beans.Coordinate;
 import com.pap.nuts.modules.model.beans.SearchValues;
 import com.pap.nuts.modules.model.beans.StopLocation;
+import com.pap.nuts.modules.services.threads.utils.DataProcess;
 import com.pap.nuts.modules.session.beans.StopLocationDao;
 import com.pap.nuts.utils.ResourceReader;
 
@@ -31,6 +32,14 @@ public class MainPage {
 	public String getPage(@Context ServletContext ctx){
 		ResourceReader file = NutAppInitializer.getContext().getBean(ResourceReader.class);
 		return file.getHtmlPage();
+	}
+	
+	
+	@GET
+	@Path("/server_stat")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<String> getServerStatus(){
+		return DataProcess.getFinishedTaskList();
 	}
 	
 	@POST

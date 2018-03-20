@@ -4,8 +4,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
-import com.pap.nuts.modules.interfaces.DaoService;
-
+/**
+ * SpringBoot initializer.
+ * 
+ * @author Pap Gergely
+ *
+ */
 @SpringBootApplication
 public class NutAppInitializer{
 	
@@ -17,10 +21,6 @@ public class NutAppInitializer{
 	
 	public static ApplicationContext getContext(){
 		return context;
-	}
-	
-	public static <T extends DaoService<?>> T getService(Class<T> service){
-		return context.getBean(service);
 	}
 	
 }

@@ -205,3 +205,17 @@ div[enabled=enabled] {
 	height: 10px;
 	width: 100%;
 }
+#process_list_div{
+	position: block;
+	text-align: center;
+	height: 120px;
+	width: 220px;
+	padding: 0px;
+	overflow-x: hidden;
+	overflow-y: hidden;
+}
+#process_list{
+	height: 98%;
+	background: rgba(255, 255, 255, .9);
+	overflow-y: auto;
+}

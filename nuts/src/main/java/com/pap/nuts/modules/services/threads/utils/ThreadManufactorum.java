@@ -13,11 +13,9 @@ public class ThreadManufactorum implements ThreadFactory {
 	
 	private int priority;
 	private String threadName;
-	private AtomicLong cnt;
 	
 	public ThreadManufactorum(int priority){
 		this.priority = priority;
-		cnt = new AtomicLong(0);
 	}
 	
 	public void setThreadName(String threadName) {
@@ -27,7 +25,7 @@ public class ThreadManufactorum implements ThreadFactory {
 	@Override
 	public Thread newThread(Runnable r) {
 		Thread thread = new Thread(r);
-		thread.setName("process_"+cnt.getAndIncrement());
+		thread.setName(threadName);
 		thread.setPriority(priority);
 		thread.setDaemon(true);
 		

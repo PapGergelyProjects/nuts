@@ -41,7 +41,7 @@ public class ZipExtractService {
             try(FileOutputStream f = new FileOutputStream(bkkFile)){
                 int len;
                 while ((len = zis.read(buffer)) > 0) {
-                    f.write(buffer, 0, len);// Shity solution...
+                    f.write(buffer, 0, len);
                 }
             }catch(IOException e){
             	LOGGER.error("File extraction faild: "+e);

@@ -76,11 +76,13 @@ locationSelector.controller('utils_ctrl', function($scope){
 			getById('sh_palce').disabled=true;
 			getById('coord_search_btn').disabled=true;
 			getById('points').disabled=true;
+			getById('google_map').setAttribute("disabled", "disabled");
 		}else{
 			$scope.error_msg = "";
 			getById('sh_palce').disabled=false;
 			getById('coord_search_btn').disabled=false;
 			getById('points').disabled=false;
+			getById('google_map').setAttribute("disabled", "enabled");
 		}
 	}
 	$scope.checkClick = function(){
@@ -90,4 +92,21 @@ locationSelector.controller('utils_ctrl', function($scope){
 			map.setOptions({draggableCursor:''});
 		}
 	}
+});
+
+locationSelector.controller('process_ctrl', function($rootScope, $scope, $http, $interval){
+	/*This needed to track the server side, because the data insertion, refreshment take serious time, while the user cannot do anything, but wait.
+	so with this solution, at least the actual process will show. */
+	$scope.backgroundProcesses = function(){
+		$http.get('/nuts/radius/server_stat').then(function(resp){
+			if(resp['data'].length > 0){
+				getById('process_list').innerHTML = resp['data'].join("\n");
+				$rootScope.loading = true;
+			}else{
+				$rootScope.loading = false;
+			}
+		});
+	}
+	$interval($scope.backgroundProcesses, 2000);
+
 });

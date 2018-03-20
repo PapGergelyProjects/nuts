@@ -10,9 +10,15 @@ import com.pap.nuts.modules.services.data.convert.DataRefiner;
 import com.pap.nuts.modules.services.data.zip.ZipExtractService;
 import com.pap.nuts.modules.services.threads.processes.VersionHandlerThread;
 
+/**
+ * This class handles the environ file, and the beans which use it.
+ * 
+ * @author Pap Gergely
+ *
+ */
 @Configuration
 @PropertySource("classpath:config.properties")
-public class PropertiesFile {
+public class EnvironBeanConfig {
 		
 	@Autowired
 	private Environment env;

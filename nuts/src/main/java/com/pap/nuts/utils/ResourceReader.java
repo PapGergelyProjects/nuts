@@ -26,7 +26,7 @@ public class ResourceReader {
 	public String getHtmlPage(){
 		StringJoiner join = new StringJoiner("\n");
 		try {
-			Scanner scn = new Scanner(cert.getInputStream());
+			Scanner scn = new Scanner(cert.getInputStream());//TODO: Maybe, there is a better solution, but for now this is good.
 			while(scn.hasNext()){
 				join.add(scn.nextLine());
 			}

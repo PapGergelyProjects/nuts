@@ -5,7 +5,10 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.log4j.Logger;
+
 import com.pap.nuts.modules.interfaces.ThreadUtils;
+import com.pap.nuts.modules.services.threads.utils.ThreadCache;
 import com.pap.nuts.modules.services.threads.utils.ThreadManufactorum;
 
 /**
@@ -22,23 +25,29 @@ public enum ThreadServiceHandler implements ThreadUtils {
 	
 	FIXED {
 		@Override
-		public void process(Runnable... processes) {
+		public void process(String name, Runnable process) {
 			if(cachedThreadPool==null){
 				cachedThreadPool = Executors.newCachedThreadPool(manufactorum);
 			}
-			for(Runnable process : processes){
+			if(!ThreadCache.getAllThread().stream().anyMatch(pre -> pre.getName().equals(name))){
+				manufactorum.setThreadName(name);
 				cachedThreadPool.execute(process);
+			}else{
+				LOGG.warn("The thread "+name+" has already in thread pool.");
 			}
 		}
 	},
 	SCHEDULED{
 		@Override
-		public void process(long timeQty, TimeUnit unit, Runnable... processes){
+		public void process(long delayed, long timeQty, TimeUnit unit, String name, Runnable process){
 			if(scheduledService==null){
 				scheduledService = Executors.newScheduledThreadPool(3, manufactorum);
 			}
-			for(Runnable process : processes){
-				scheduledService.scheduleAtFixedRate(process, 0, timeQty, unit);
+			if(!ThreadCache.getAllThread().stream().anyMatch(pre -> pre.getName().equals(name))){
+				manufactorum.setThreadName(name);
+				scheduledService.scheduleAtFixedRate(process, delayed, timeQty, unit);
+			}else{
+				LOGG.warn("The thread "+name+" has already in thread pool.");
 			}
 		}
 	},
@@ -57,4 +66,5 @@ public enum ThreadServiceHandler implements ThreadUtils {
 	private static ThreadManufactorum manufactorum = new ThreadManufactorum(Thread.NORM_PRIORITY);
 	private static ScheduledExecutorService scheduledService;
 	private static ExecutorService cachedThreadPool;
+	private static Logger LOGG = Logger.getLogger(ThreadServiceHandler.class);
 }
