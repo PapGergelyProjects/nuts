@@ -9,7 +9,7 @@ body{
 	padding-top: 20px;
 	padding-left: 5px;
 	height: 40px;
-	background: rgba(0, 102, 255, .9);
+	background: rgba(77, 166, 255, .9);
 	margin-bottom: 10px;
 }
 #tit{
@@ -54,7 +54,7 @@ body{
 #utils{
 	position: block;
 	text-align: left;
-	height: 85px;
+	height: 110px;
 	width: 200px;
 	background: rgba(179, 179, 204, .9);
 	margin-bottom: 5px;
@@ -187,4 +187,21 @@ label, .location_srh.par{
 .error_msg{
 	font-size: 14px;
 	color: red;
+}
+#loading_screen{
+    height:100%;
+    width:100%;
+	background: rgba(77, 166, 255, .7);
+	z-index:999;
+}
+div[disabled=disabled] {
+  pointer-events: none;
+  opacity: 0.8;
+}
+div[enabled=enabled] {
+  pointer-events: all;
+}
+#progress_bar{
+	height: 10px;
+	width: 100%;
 }

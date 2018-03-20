@@ -47,7 +47,9 @@ BEGIN
         LOOP
             depa_times := array_append(depa_times, depa_time);
         END LOOP;
+        
         depart_time := depa_times;
+        
         RETURN NEXT;
     END LOOP;
 END

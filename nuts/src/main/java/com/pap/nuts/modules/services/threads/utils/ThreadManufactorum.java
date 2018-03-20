@@ -1,7 +1,7 @@
 package com.pap.nuts.modules.services.threads.utils;
 
 import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * This is an factory class for the thread handling.
@@ -12,17 +12,22 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class ThreadManufactorum implements ThreadFactory {
 	
 	private int priority;
-	private volatile AtomicInteger cnt;
+	private String threadName;
+	private AtomicLong cnt;
 	
 	public ThreadManufactorum(int priority){
 		this.priority = priority;
-		cnt = new AtomicInteger(0);
+		cnt = new AtomicLong(0);
 	}
 	
+	public void setThreadName(String threadName) {
+		this.threadName = threadName;
+	}
+
 	@Override
 	public Thread newThread(Runnable r) {
 		Thread thread = new Thread(r);
-		thread.setName("simple_thread_"+cnt.incrementAndGet());
+		thread.setName("process_"+cnt.getAndIncrement());
 		thread.setPriority(priority);
 		thread.setDaemon(true);
 		

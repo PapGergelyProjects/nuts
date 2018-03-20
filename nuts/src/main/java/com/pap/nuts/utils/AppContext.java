@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import com.pap.nuts.NutAppInitializer;
 import com.pap.nuts.modules.services.data.convert.DataRefiner;
 import com.pap.nuts.modules.services.threads.ThreadServiceHandler;
+import com.pap.nuts.modules.services.threads.processes.MonitorRunningProcessDebug;
 import com.pap.nuts.modules.services.threads.processes.VersionHandlerThread;
 
 public class AppContext implements ServletContextListener {

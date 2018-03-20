@@ -156,4 +156,32 @@ locationSelector.service('stopCoordinatesAssembler', function(){
 	
 });
 
+locationSelector.service('click_radius', function($http, setLocation, loader){
+	this.addClickLst = function(event, $rootScope){
+		if(getById('points').checked){
+			let latitude = event.latLng.lat();
+			let longitude = event.latLng.lng();
+			let radius = Number(getById('rad').value);
+			let json = {radius:radius, searchCoordinate:{latitude:latitude, longitude:longitude}}
+			let service = getById('times').checked ? $http.post('/nuts/radius/stop_times', json) : $http.post('/nuts/radius/stop_location', json);
+			$rootScope.loading = true;
+			service.then(function(reponse){
+				setLocation.setCoordinates(json['searchCoordinate'], reponse['data'], radius);
+				$rootScope.loading = false;
+			}, function(reponse){
+				console.log(reponse['data']);//error
+			});
+		}
+	}
+});
 
+locationSelector.service('loader', function(){
+	var state = false;
+	
+	this.setLoadingState = function(stat){
+		state = stat;
+	}
+	this.loading = function(){
+		return state;
+	}
+})
