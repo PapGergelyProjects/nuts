@@ -1,6 +1,5 @@
 package com.pap.nuts.modules.interfaces;
 
-import java.util.List;
 import java.util.Map;
 
 @FunctionalInterface

@@ -1,7 +1,6 @@
 package com.pap.nuts.modules.session.beans;
 
 import java.text.DecimalFormat;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,10 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
 import com.pap.nuts.NutAppInitializer;
 import com.pap.nuts.modules.interfaces.BeanSetter;
 import com.pap.nuts.modules.interfaces.DaoService;
@@ -29,7 +24,6 @@ import com.pap.nuts.modules.model.beans.StopLocation;
 public class StopLocationDao extends JdbcDaoSupport implements DaoService<StopLocation> {
 	
 	private DecimalFormat doubleFormat = new DecimalFormat(".#");
-	private Gson gson = new Gson();
 	
 	@Autowired
 	private DataSource dataSource;

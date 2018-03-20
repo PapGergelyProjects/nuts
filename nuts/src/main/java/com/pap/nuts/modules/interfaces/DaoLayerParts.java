@@ -1,7 +1,5 @@
 package com.pap.nuts.modules.interfaces;
 
-import java.security.acl.NotOwnerException;
-
 public interface DaoLayerParts<T> {
 	
 	public void insert(T value);

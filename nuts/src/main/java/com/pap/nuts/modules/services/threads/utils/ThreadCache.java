@@ -2,7 +2,6 @@ package com.pap.nuts.modules.services.threads.utils;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;

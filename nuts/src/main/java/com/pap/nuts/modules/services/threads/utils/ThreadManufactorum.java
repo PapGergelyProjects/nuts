@@ -1,7 +1,6 @@
 package com.pap.nuts.modules.services.threads.utils;
 
 import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * This is an factory class for the thread handling.
