@@ -23,3 +23,4 @@ Further development, features:
   -Integrate more GTFS archive in order to increase the service coverage.
   -More analitic function, like service overlap, statictics about routes stops etc.
   -Mobile version, with bootstrap.
+  -Tests, tests, tests
