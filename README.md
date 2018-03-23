@@ -9,9 +9,10 @@ The application actually has two main function:
 The data come from the official website: https://bkk.hu/apps/gtfs/ and the downloader service can download automatically the archive, this service is bind on a thread which check the new versions.
 
 important:
-  -check config.properties, this contains the utility params for the app, in order to run properly please check before start.
-  -stop_times file is huge(sometimes can contains 5m row), which means the inserts can take a lot of time, so don't be surpised.
-  -the gtfs-dataset process can be take 1 hour or more.
+  - check config.properties, this contains the utility params for the app, in order to run properly please check before start.
+  - stop_times file is huge(sometimes can contains 5m row), which means the inserts can take a lot of time, so don't be surpised.
+  - the gtfs-dataset process can be take 1 hour or more.
+  - in order to run the project you need an own google api key, for dev is free, here you can get one: https://developers.google.com/maps/documentation/javascript/get-api-key
 
 requirements:
   -JDK8
