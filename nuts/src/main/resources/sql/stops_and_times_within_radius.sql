@@ -9,7 +9,7 @@ RETURNS TABLE(
     text_color character varying, 
     depart_time TIME[]
 )
-AS $$
+AS $body$
 DECLARE
     center_lat ALIAS FOR $1;
     center_lot ALIAS FOR $2;
@@ -53,4 +53,4 @@ BEGIN
         RETURN NEXT;
     END LOOP;
 END
-$$ LANGUAGE plpgsql^;
+$body$ LANGUAGE plpgsql^;

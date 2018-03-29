@@ -19,7 +19,7 @@ import com.pap.nuts.modules.model.beans.Coordinate;
 import com.pap.nuts.modules.model.beans.SearchValues;
 import com.pap.nuts.modules.model.beans.StopLocation;
 import com.pap.nuts.modules.services.threads.utils.DataProcess;
-import com.pap.nuts.modules.session.beans.StopLocationDao;
+import com.pap.nuts.modules.session.services.StopLocationDao;
 import com.pap.nuts.utils.ResourceReader;
 
 @Path("/")

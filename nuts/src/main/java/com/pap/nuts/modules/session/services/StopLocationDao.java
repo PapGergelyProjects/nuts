@@ -1,4 +1,4 @@
-package com.pap.nuts.modules.session.beans;
+package com.pap.nuts.modules.session.services;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;

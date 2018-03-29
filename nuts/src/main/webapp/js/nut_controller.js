@@ -68,7 +68,7 @@ locationSelector.controller('coordinate_select_ctrl', function($rootScope, $scop
 	};
 });
 
-locationSelector.controller('utils_ctrl', function($scope){
+locationSelector.controller('utils_ctrl', function($scope, $window){
 	$scope.radius=500;
 	$scope.checkValue = function(){
 		if(Number(getById('rad').value) > 5000){
@@ -92,6 +92,10 @@ locationSelector.controller('utils_ctrl', function($scope){
 			map.setOptions({draggableCursor:''});
 		}
 	}
+	
+	$scope.redirect = function(){
+		$window.location.href = "/nuts/radius/options";
+	}
 });
 
 locationSelector.controller('process_ctrl', function($rootScope, $scope, $http, $interval){
@@ -108,5 +112,21 @@ locationSelector.controller('process_ctrl', function($rootScope, $scope, $http, 
 		});
 	}
 	$interval($scope.backgroundProcesses, 2000);
+});
 
+
+/********************		Opt		************************/
+adminFunctions.controller('feed_list', function($scope){
+	$scope.feeds = [
+		'Aachen, Germany',
+		'Budapest, Hungary',
+		'Huntsville, AL, USA',
+		'Indiana, USA',
+		'Innisfail QLD 4860, Australia',
+		'Israel'
+	];
+	
+	$scope.clk = function(){
+		console.log("click");
+	}
 });

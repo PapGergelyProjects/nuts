@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+	<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Nuts option</title>
+	    <link rel="shortcut icon" type="image/png" href="/nuts/img/nuts.png">
+		<link rel="stylesheet" type="text/css" href="/nuts/css/nut_style.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+	</head>
+	<body id="option_page_body">
+	  	<div class="title_div">
+			<span class="tit">Options</span>
+	  	</div>
+		<div id="main" ng-app="admin_funct">
+			<div id="feed_search_div" ng-controller="feed_list">
+				<input id="search_field" type="text" ng-model="search" placeholder="Search feed">
+				<div id="list_div">
+					<ol id="list_pool" class="feed_lst" class="rounded-list">
+						<li ng-repeat="feed in feeds | filter:search"><p ng-click="clk()"><input class="ch" type="checkbox">{{feed}}</p></li>                   
+					</ol>
+				</div>
+			</div>
+			<div id="update_opt">
+				<label> Frissítés
+					<input class="ch" type="checkbox">
+				</label>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="/nuts/js/nut_app.js"></script>
+	<script type="text/javascript" src="/nuts/js/nut_service.js"></script>
+	<script type="text/javascript" src="/nuts/js/nut_directives.js"></script>
+	<script type="text/javascript" src="/nuts/js/nut_controller.js"></script>
+</html>

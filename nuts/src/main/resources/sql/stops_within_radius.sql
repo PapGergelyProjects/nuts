@@ -8,7 +8,7 @@ RETURNS TABLE(
     stop_color VARCHAR(6),
     text_color VARCHAR(6)
 )
-AS $$
+AS $body$
 DECLARE
     center_latitude ALIAS FOR $1;
     center_longitude ALIAS FOR $2;
@@ -28,4 +28,4 @@ BEGIN
         RETURN NEXT;
     END LOOP;
 END
-$$ LANGUAGE plpgsql^;
+$body$ LANGUAGE plpgsql^;

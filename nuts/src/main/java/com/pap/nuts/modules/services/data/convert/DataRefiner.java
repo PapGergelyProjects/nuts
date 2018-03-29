@@ -1,7 +1,6 @@
 package com.pap.nuts.modules.services.data.convert;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -11,18 +10,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
-import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
-import org.springframework.core.env.Environment;
+import org.springframework.beans.factory.annotation.Value;
 
 import com.pap.nuts.NutAppInitializer;
 import com.pap.nuts.modules.services.data.utils.TableInsertValues;
 import com.pap.nuts.modules.services.threads.utils.DataProcess;
-import com.pap.nuts.modules.session.service.DataSourceService;
+import com.pap.nuts.modules.session.services.DataSourceDao;
 
 /**
  * This class is responsible for the gtfs data management.
@@ -34,25 +32,23 @@ import com.pap.nuts.modules.session.service.DataSourceService;
  */
 public class DataRefiner{
 	
-	private Environment env;
+	@Value("${temp_directory}")
+	private String tempFolder;
+	
 	private final Logger LOGGER = Logger.getLogger(DataRefiner.class);
 	
 	public DataRefiner(){}
-	public DataRefiner(Environment env){
-		this.env = env;
-	}
 	
 	public void createInsertFromFile() throws IOException{
-		String tempDirectory = env.getProperty("temp_directory");
-        File[] listOfFiles = new File(tempDirectory).listFiles();
-        DataSourceService srvc = NutAppInitializer.getContext().getBean(DataSourceService.class);
+        File[] listOfFiles = new File(tempFolder).listFiles();
+        DataSourceDao srvc = NutAppInitializer.getContext().getBean(DataSourceDao.class);
         srvc.execute("SELECT clear_tables();");
         DataProcess.getFinishedTaskList().clear();
         LOGGER.info("Tables cleared.");
         Map<String, TableInsertValues> tableList = Arrays.asList(TableInsertValues.values()).stream().collect(Collectors.toMap(k -> k.getTableName(), v -> v));
         for (File file : listOfFiles) {
             if(file.isFile() && file.getName().contains(".txt")){
-                List<String> fileContent = Files.readAllLines(Paths.get(tempDirectory+file.getName()), Charset.forName("utf-8"));
+                List<String> fileContent = Files.readAllLines(Paths.get(tempFolder+file.getName()), Charset.forName("utf-8"));
                 String tabelName = file.getName().replace(".txt", "");
                 String[] columns = fileContent.remove(0).split(",");
                 String joinedCols = Arrays.asList(columns).stream().collect(Collectors.joining(",","(",")"));
@@ -82,10 +78,10 @@ public class DataRefiner{
                 }
                 LOGGER.info(tabelName+" insert done.");
                 DataProcess.addToList(tabelName+" insert done.");
-                Files.delete(Paths.get(tempDirectory+file.getName()));
+                Files.delete(Paths.get(tempFolder+file.getName()));
             }
         }
-        Files.delete(Paths.get(tempDirectory+"/bkk_gtfs_new.zip"));
+        Files.delete(Paths.get(tempFolder+"/bkk_gtfs_new.zip"));
         srvc.execute("REFRESH MATERIALIZED VIEW static_stops;");
         LOGGER.info("static_stops view refreshed.");
         DataProcess.addToList("static_stops view refreshed.");

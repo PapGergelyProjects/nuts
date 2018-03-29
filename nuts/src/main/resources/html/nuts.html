@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Nuts</title>
-    <link rel="shortcut icon" type="image/png" href="/nuts/img/nuts.png">
-	<link rel="stylesheet" type="text/css" href="/nuts/css/nut_style.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-  </head>
-  <body>
+  	<head>
+		<meta charset="UTF-8">
+		<title>Nuts</title>
+		<link rel="shortcut icon" type="image/png" href="/nuts/img/nuts.png">
+		<link rel="stylesheet" type="text/css" href="/nuts/css/nut_style.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+	</head>
+  <body id="main_page_body">
 	<div id="wrap" ng-app="location_finder" ng-controller="wrapDiv">
   		<loading ng-show="loading"></loading>
-	  	<div id="title_div">
+	  	<div class="title_div">
 			<span id="tit">Stops Within The Specified Range</span>
 	  	</div>
 		<div id="google_map" ng-controller="mapInit" disabled="enabled"></div>
@@ -41,6 +41,7 @@
 				<input id="points" class="btn" type="checkbox" value="points" ng-click="checkClick()">
 				<span class="checked"></span>
 			</label>
+			<input id="opt" type="button" class="input_f btn" value="Options" ng-click="redirect()">
 		</div>
 		<div id="process_list_div" class="div_borders" ng-controller="process_ctrl">
 			<textarea id="process_list" cols="30" disabled="disabled" placeholder="Data update process list"></textarea>
@@ -51,5 +52,5 @@
   <script type="text/javascript" src="/nuts/js/nut_service.js"></script>
   <script type="text/javascript" src="/nuts/js/nut_directives.js"></script>
   <script type="text/javascript" src="/nuts/js/nut_controller.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=<your_key>&libraries=places&callback=initMap" async defer></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=<api_key>&libraries=places&callback=initMap" async defer></script>
 </html>

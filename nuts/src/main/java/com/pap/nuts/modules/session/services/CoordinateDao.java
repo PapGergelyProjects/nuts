@@ -1,4 +1,4 @@
-package com.pap.nuts.modules.session.beans;
+package com.pap.nuts.modules.session.services;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

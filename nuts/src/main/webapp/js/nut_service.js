@@ -184,4 +184,18 @@ locationSelector.service('loader', function(){
 	this.loading = function(){
 		return state;
 	}
+});
+
+
+adminFunctions.service('sessionStorage', function(){
+	
+	this.store = function(elementName, element){
+		sessionStorage.setItem(elementName, element);
+	}
+	
+	this.retrieve = function(elementName){
+		return sessionStorage.getItem(elementName);
+	}
+	
 })
+

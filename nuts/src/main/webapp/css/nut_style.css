@@ -1,9 +1,14 @@
-body{
+#main_page_body{
 	background-image: url("/nuts/img/bakcground_bus.jpg");
 	background-repeat: no-repeat;
 	background-size: 1920px 1080px;
 }
-#title_div{
+.tit{
+	font-size: 25px;
+	font-family: "Lucida Console";
+	color: white;
+}
+.title_div{
 	text-align: left;
 	vertical-align: middle;
 	padding-top: 20px;
@@ -11,11 +16,6 @@ body{
 	height: 40px;
 	background: rgba(77, 166, 255, .9);
 	margin-bottom: 10px;
-}
-#tit{
-	font-size: 25px;
-	font-family: "Lucida Console";
-	color: white;
 }
 #wrap{
 	
@@ -54,7 +54,7 @@ body{
 #utils{
 	position: block;
 	text-align: left;
-	height: 110px;
+	height: 150px;
 	width: 200px;
 	background: rgba(179, 179, 204, .9);
 	margin-bottom: 5px;
@@ -218,4 +218,91 @@ div[enabled=enabled] {
 	height: 98%;
 	background: rgba(255, 255, 255, .9);
 	overflow-y: auto;
+}
+/*********************			OPTIONS			**********************/
+
+#option_page_body{
+	background-image: url("/nuts/img/options_backg.png");
+	background-repeat: no-repeat;
+	background-size: 1920px 1080px;
+}
+#feed_search_div{
+	position: relative;
+	float:left;
+	background: rgba(255, 194, 102, .9);
+}
+#update_opt{
+	position: relative;
+	width: 500px;
+	height: 230px;
+	float:left;
+	border: 2px solid red;
+	padding: 2px;
+	margin-left: 3px;
+	background: rgba(255, 194, 102, .9);
+}
+#search_field{
+	padding: 5px;
+	margin-top: 3px;
+	margin-bottom: 3px;
+}
+#list_div{
+	width: 500px;
+	height: 200px;
+	padding-left: 20px;
+	overflow-y: auto;
+	border: 1px solid #a6a6a6;
+}
+#list_pool{
+    counter-reset: li;
+    list-style: none;
+    *list-style: decimal;
+    font: 15px 'trebuchet MS', 'lucida sans';
+    padding: 0;
+    margin-bottom: 4em;
+    text-shadow: 0 1px 0 rgba(255,255,255,.5);
+}
+.feed_lst p{
+    position: relative;
+    display: block;
+    padding: .4em .4em .4em 2em;
+    *padding: .4em;
+    margin: .5em 0;
+    background: #ddd;
+    color: #f2f2f2;
+    text-decoration: none;
+    border-radius: .3em;
+    transition: all .3s ease-out;
+}
+.feed_lst p:hover{
+	background: #eee;
+}
+/*
+.feed_lst p:hover:before{
+	transform: rotate(90deg);
+}
+*/
+.feed_lst p:before{
+    content: counter(li);
+    counter-increment: li;
+    position: absolute; 
+    left: -1.3em;
+    top: 50%;
+    margin-top: -1.3em;
+    background: #87ceeb;
+    height: 2em;
+    width: 2em;
+    line-height: 2em;
+    border: .3em solid #fff;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 2em;
+    transition: all .3s ease-out;
+}
+.ch{
+    top: 0;
+    left: 0;
+    height: 15px;
+    width: 15px;
+    background-color: #eee;
 }

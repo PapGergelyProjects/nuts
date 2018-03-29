@@ -10,6 +10,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 
 /**
@@ -21,23 +22,21 @@ import org.springframework.core.env.Environment;
 public class ZipExtractService {
 	
 	private static final Logger LOGGER = Logger.getLogger(ZipExtractService.class);
-	private Environment env;
+	
+	@Value("${temp_directory}")
+	private String tempFolder;
 	
 	public ZipExtractService(){}
 	
-	public ZipExtractService(Environment env){
-		this.env = env;
-	}
 	
     public void extractZipFile() throws IOException{
     	LOGGER.info("Starting extracting files from zip...");
-    	String tempPath = env.getProperty("temp_directory");
-        ZipInputStream zis = new ZipInputStream(new FileInputStream(tempPath+"/bkk_gtfs_new.zip"));
+        ZipInputStream zis = new ZipInputStream(new FileInputStream(tempFolder+"/bkk_gtfs_new.zip"));
         ZipEntry zipEntry = zis.getNextEntry();
         byte[] buffer = new byte[1024];
         while(zipEntry != null){
             String fileName = zipEntry.getName();
-            File bkkFile = new File(tempPath+fileName);
+            File bkkFile = new File(tempFolder+fileName);
             try(FileOutputStream f = new FileOutputStream(bkkFile)){
                 int len;
                 while ((len = zis.read(buffer)) > 0) {
