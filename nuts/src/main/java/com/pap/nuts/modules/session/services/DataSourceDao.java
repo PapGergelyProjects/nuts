@@ -29,9 +29,12 @@ public class DataSourceDao<T> extends JdbcDaoSupport implements DaoService<Strin
 
 	@Override
 	public void update(String value) {}
+	
+	@Override
+	public void delete(String value) {}
 
 	@Override
-	public String select() {
+	public String select(long id) {
 		return null;
 	}
 

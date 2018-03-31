@@ -35,14 +35,18 @@ public class CoordinateDao extends JdbcDaoSupport implements DaoService<Coordina
 	@Override
 	public void update(Coordinate value) {
 	}
-
+	
+	@Override
+	public void delete(Coordinate value) {
+	}
+	
 	@Override
 	public void execute(Coordinate value) {
 	}
 
 	@Override
-	public Coordinate select() {
-		final String sql = "SELECT stop_lat, stop_lon FROM stops WHERE id=1";
+	public Coordinate select(long id) {
+		final String sql = "SELECT stop_lat, stop_lon FROM stops WHERE id="+id;
 		RowMapper<Coordinate> mapper = new RowMapper<Coordinate>(){
 			@Override
 			public Coordinate mapRow(ResultSet rs, int rowNum) throws SQLException {

@@ -1,8 +1,8 @@
 DO
 $body$
 BEGIN
-    IF NOT EXISTS(SELECT * FROM information_schema.schemata WHERE schema_name='bkk') THEN
-    CREATE SCHEMA bkk
+    IF NOT EXISTS(SELECT * FROM information_schema.schemata WHERE schema_name='nuts_transit_feed') THEN
+    CREATE SCHEMA nuts_transit_feed
 		CREATE TABLE agency(
 		    id SERIAL PRIMARY KEY,
 		    agency_id CHARACTER VARYING(10),
@@ -90,6 +90,12 @@ BEGIN
 		    shape_id CHARACTER VARYING(10),
 		    wheelchair_accessible INTEGER,
 		    bikes_allowed INTEGER
+		);
+		CREATE TABLE feed_version(
+		    id SERIAL PRIMARY KEY,
+		    feed_id INT,
+		    title TEXT,
+		    latest_version DATE
 		);
     END IF;
 END;

@@ -1,5 +1,7 @@
 package com.pap.nuts.modules.model.beans;
 
+import com.pap.nuts.modules.interfaces.AbstractBean;
+
 /**
  * This is an utility bean for the http communication.
  * The client side transmit data to server side with this class.
@@ -7,7 +9,7 @@ package com.pap.nuts.modules.model.beans;
  * @author Pap Gergely
  *
  */
-public class SearchValues {
+public class SearchValues extends AbstractBean{
 	
 	private Coordinate searchCoordinate;
 	private double radius;

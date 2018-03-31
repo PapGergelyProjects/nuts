@@ -1,1 +1,1 @@
-SET SEARCH_PATH TO bkk;
+SET SEARCH_PATH TO nuts_transit_feed;

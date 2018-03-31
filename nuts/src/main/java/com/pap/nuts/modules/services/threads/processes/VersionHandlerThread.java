@@ -1,31 +1,36 @@
 package com.pap.nuts.modules.services.threads.processes;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 import org.apache.log4j.Logger;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.env.Environment;
 
+import com.google.gson.Gson;
+import com.pap.nuts.NutAppInitializer;
 import com.pap.nuts.modules.interfaces.AbstractProcessService;
-import com.pap.nuts.modules.services.threads.ThreadServiceHandler;
-import com.pap.nuts.modules.services.threads.utils.ThreadCache;
+import com.pap.nuts.modules.interfaces.DaoService;
+import com.pap.nuts.modules.model.beans.FeedVersion;
+import com.pap.nuts.modules.model.json.SwaggerFeed;
+import com.pap.nuts.modules.model.json.SwaggerFeed.FeedURL;
+import com.pap.nuts.modules.model.json.SwaggerFeed.Feeds;
+import com.pap.nuts.modules.model.json.SwaggerFeed.Latest;
+import com.pap.nuts.modules.model.json.SwaggerFeed.Location;
+import com.pap.nuts.modules.session.services.FeedVersionDao;
 
 /**
  * Check the gtfs content version and proceed the download when it's needed.
@@ -38,78 +43,78 @@ public class VersionHandlerThread extends AbstractProcessService{
 	
 	private final Logger LOGGER = Logger.getLogger(VersionHandlerThread.class);
 	
-	@Value("${data_source_url}")
-	private String dataSource;
+	@Value("${transit_feed_key}")
+	private String transitApiKey;
 	
 	@Value("${temp_directory}")
 	private String tempFolder;
 	
-	
-	private Predicate<Element> longVal = elem -> {
-        try{
-            Long.parseLong(elem.text());
-        }catch(NumberFormatException ex){
-            return true;
-        }
-        return false;
-	};
-	
-	public VersionHandlerThread(){}
+	private Gson gson = new Gson();
 	
 	@Override
 	protected void logic() throws Exception {
-        Document doc = Jsoup.connect(dataSource).get();
-        List<List<String>> mainList = new ArrayList<>();
-        Elements trElement = doc.getElementsByTag("tr");
-        trElement.stream().forEach(e -> {
-            List<String> resList = e.getElementsByTag("td")
-                                    .stream()
-                                    .filter(longVal)
-                                    .map(map -> map.text())
-                                    .collect(Collectors.toList());
-            mainList.add(resList);
-        });
-        Map<String, LocalDateTime> fileList = mainList.stream().filter(pre -> !pre.isEmpty()).collect(Collectors.toMap(k -> k.get(0), v -> LocalDateTime.parse(v.get(1), DateTimeFormatter.ofPattern("yyyy.MM.dd. HH:mm:ss"))));
-        if(ThreadCache.getVersionCache().isEmpty()){
-        	//startDownload(doc);
-        	ThreadCache.getVersionCache().putAll(fileList);
-        	//ThreadServiceHandler.FIXED.process("data_update", new DataUpdateThread()); // TODO: place back, when develop done.
-        }else{
-        	for(Map.Entry<String, LocalDateTime> pair : fileList.entrySet()){
-        		String k = pair.getKey();
-        		if(ThreadCache.getVersionCache().get(k).isEqual(pair.getValue())){
-        			LOGGER.info(k+" is up to date.");
-        		}else{
-        			LOGGER.info(k+" is out of date.");
-        			//startDownload(doc);
-        			ThreadCache.getVersionCache().putAll(fileList);
-        			//ThreadServiceHandler.FIXED.process("data_update_f", new DataUpdateThread());
-        			break;
-        		}
-        	}
-        }
-	}
-	/**
-	 * As the name suggest, this function grab the link from the page, and start download.
-	 * @param doc
-	 * @throws IOException
-	 */
-	private void startDownload(Document doc) throws IOException{
-        Element caption = doc.getElementsByTag("caption").first();
-        Element link = caption.getElementsByTag("a").first();
-        String href = link.attr("abs:href");
-        downloadFile(href);
+		List<String> links = checkSelectedFeed();
+		for (String link : links) {
+			String[] fileUrl = link.split("/");
+			downloadFile(link,fileUrl[fileUrl.length-1]);
+		}
 	}
 	
-    private void downloadFile(String urlAddress) throws IOException{
-        URL pack = new URL(urlAddress.replace("http", "https"));
+	private List<String> checkSelectedFeed() throws IOException{
+		List<String> downloadLinks = new ArrayList<>();
+		DaoService<FeedVersion> dbSrv = NutAppInitializer.getContext().getBean(FeedVersionDao.class);
+		List<FeedVersion> feedVers = dbSrv.getAll();
+		for (FeedVersion feedVersion : feedVers) {
+			String urlAddress = String.format("http://api.transitfeeds.com/v1/getFeeds?key=%sf&location=%d&descendants=1&page=1&limit=1000", transitApiKey, feedVersion.getFeedId());
+			URL url = new URL(urlAddress);
+			HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+			SwaggerFeed feed = getTransitFeedJson(conn);
+			Feeds[] feeds = feed.results.feeds;
+			for (Feeds fd : feeds) {
+				Location location = fd.l;
+				FeedURL feedLink = fd.u;
+				Latest latest = fd.latest;
+				LocalDate verDate = Instant.ofEpochMilli(latest.ts).atZone(ZoneId.systemDefault()).toLocalDate();
+				if(feedVersion.getLatestVersion().isBefore(verDate)){
+					long feedId = location.id;
+					String title = fd.t;
+					String link = feedLink.d;
+					downloadLinks.add(link);
+					
+					FeedVersion newVersion = NutAppInitializer.getContext().getBean("feedVersion", FeedVersion.class);
+					newVersion.setId(feedVersion.getId());
+					newVersion.setFeedId(feedId);
+					newVersion.setTitle(title);
+					newVersion.setLatestVersion(verDate);
+					dbSrv.update(newVersion);
+				}
+			}
+		}
+		return downloadLinks;
+	}
+	
+	private SwaggerFeed getTransitFeedJson(HttpURLConnection conn){
+		StringBuilder sb = new StringBuilder();
+		try(BufferedReader bfr = new BufferedReader(new InputStreamReader(conn.getInputStream()))){
+			while(bfr.ready()){
+				sb.append(bfr.readLine());
+			}
+		}catch(IOException e){
+			LOGGER.error(e);
+		}
+		
+		return Optional.ofNullable(gson.fromJson(sb.toString(), SwaggerFeed.class)).orElse(new SwaggerFeed());
+	}
+	
+    private void downloadFile(String urlAddress, String archiveName) throws IOException{
+        URL pack = new URL(urlAddress);//.replace("http", "https")
         LOGGER.info("Download file from: "+urlAddress);
         try(InputStream in = pack.openStream()){
-            Files.copy(in, Paths.get(tempFolder+"/bkk_gtfs_new.zip"), StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(in, Paths.get(tempFolder+"/"+archiveName), StandardCopyOption.REPLACE_EXISTING);
         }catch(MalformedURLException m){
         	LOGGER.error(m);
         }
         LOGGER.info("Download finished!");
     }
-
+	
 }

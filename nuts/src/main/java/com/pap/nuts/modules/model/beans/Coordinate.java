@@ -1,5 +1,7 @@
 package com.pap.nuts.modules.model.beans;
 
+import com.pap.nuts.modules.interfaces.AbstractBean;
+
 /**
  * This class represents a coordinate.
  * Mainly use in other classes
@@ -7,7 +9,7 @@ package com.pap.nuts.modules.model.beans;
  * @author Pap Gergely
  *
  */
-public class Coordinate {
+public class Coordinate extends AbstractBean{
 	
 	private double latitude;
 	private double longitude;

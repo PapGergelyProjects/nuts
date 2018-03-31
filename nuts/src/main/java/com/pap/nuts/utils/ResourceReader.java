@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.util.StringJoiner;
 
 import javax.annotation.PostConstruct;
@@ -49,7 +50,7 @@ public class ResourceReader {
 	
 	private String readFromStream(Resource resource){
 		StringJoiner join = new StringJoiner("\n");
-		try(BufferedReader bfr = new BufferedReader(new InputStreamReader(resource.getInputStream()))){
+		try(BufferedReader bfr = new BufferedReader(new InputStreamReader(resource.getInputStream(), "UTF-8"))){
 			while(bfr.ready()){
 				join.add(bfr.readLine());
 			}

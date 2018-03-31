@@ -2,6 +2,8 @@ package com.pap.nuts.modules.model.beans;
 
 import java.util.Arrays;
 
+import com.pap.nuts.modules.interfaces.AbstractBean;
+
 /**
  * This bean is hold a stop location.
  * The properties of the bean represents a valid location.
@@ -9,7 +11,7 @@ import java.util.Arrays;
  * @author Pap Gergely
  *
  */
-public class StopLocation {
+public class StopLocation extends AbstractBean{
 	
 	private String stopName;
 	private String routeName;

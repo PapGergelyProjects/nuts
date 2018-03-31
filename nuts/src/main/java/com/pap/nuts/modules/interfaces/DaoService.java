@@ -6,8 +6,9 @@ public interface DaoService<T>{
 	
 	public void insert(T value);
 	public void update(T value);
+	public void delete(T value);
 	public void execute(T value);
-	public T select();
+	public T select(long value);
 	public List<T> getAll();
 	
 	public default void customInsert(String value){

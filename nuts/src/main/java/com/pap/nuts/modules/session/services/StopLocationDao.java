@@ -38,6 +38,9 @@ public class StopLocationDao extends JdbcDaoSupport implements DaoService<StopLo
 
 	@Override
 	public void update(StopLocation value) {}
+	
+	@Override
+	public void delete(StopLocation value) {}
 
 	@Override
 	public void execute(StopLocation value) {
@@ -45,7 +48,7 @@ public class StopLocationDao extends JdbcDaoSupport implements DaoService<StopLo
 	}
 
 	@Override
-	public StopLocation select() {
+	public StopLocation select(long id) {
 		return null;
 	}
 
@@ -55,7 +58,7 @@ public class StopLocationDao extends JdbcDaoSupport implements DaoService<StopLo
 	}
 	
 	public Map<String, Map<Coordinate,List<StopLocation>>> getAllStopWithinRadius(double centerLat, double centerLon, double radius){
-		final String sql = "SELECT * FROM bkk.stops_within_radius("+centerLat+","+centerLon+","+radius+") "
+		final String sql = "SELECT * FROM stops_within_radius("+centerLat+","+centerLon+","+radius+") "
 							+ "GROUP BY stop_name, stop_lat, stop_lon, route_name, stop_distance, stop_color, text_color "
 							+ "ORDER BY route_name ";
 		
@@ -79,7 +82,7 @@ public class StopLocationDao extends JdbcDaoSupport implements DaoService<StopLo
 	public Map<String, Map<Coordinate,List<StopLocation>>> getAllStopWithinRadiusWithTime(double centerLat, double centerLon, double radius){
 		final String sql = "SELECT route_name, stop_names, stop_latitude, stop_longitude, "
 							+ "stop_color, text_color, stop_distance, depart_time "
-							+ "FROM bkk.stop_and_times_within_range("+centerLat+","+centerLon+","+radius+") "
+							+ "FROM stop_and_times_within_range("+centerLat+","+centerLon+","+radius+") "
 							+ "GROUP BY route_name, stop_names, stop_latitude, stop_longitude, stop_color, text_color, stop_distance, depart_time "
 							+ "ORDER BY route_name ";
 		
