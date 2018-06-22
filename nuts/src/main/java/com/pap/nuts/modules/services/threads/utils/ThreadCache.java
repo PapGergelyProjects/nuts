@@ -18,7 +18,6 @@ public class ThreadCache {
 	
 	private static final Logger LGG = Logger.getLogger(ThreadCache.class);
 	private static volatile WeakHashMap<Thread, Void> threadCache = new WeakHashMap<>();
-	private static final Map<String, LocalDateTime> VERSION_CACHE = new HashMap<>();
 	
 	public static void addToThreadCache(Thread thread){
 		if(!threadCache.containsKey(thread)){
@@ -31,9 +30,5 @@ public class ThreadCache {
 	
 	public static Set<Thread> getAllThread(){
 		return threadCache.keySet();
-	}
-
-	public static Map<String, LocalDateTime> getVersionCache() {
-		return VERSION_CACHE;
 	}
 }

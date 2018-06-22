@@ -10,7 +10,9 @@ BEGIN
 		    agency_url TEXT,
 		    agency_timezone VARCHAR(65),
 		    agency_lang CHARACTER VARYING(10),
-		    agency_phone CHARACTER VARYING(255)
+		    agency_phone CHARACTER VARYING(255),
+		    agency_fare_url TEXT,
+		    agency_email CHARACTER VARYING(255)
 		)
 		CREATE TABLE calendar_dates(
 		    id SERIAL PRIMARY KEY,
@@ -43,10 +45,12 @@ BEGIN
 		    route_id CHARACTER VARYING(60),
 		    route_short_name CHARACTER VARYING(10),
 		    route_long_name CHARACTER VARYING(255),
-		    route_type INTEGER,
 		    route_desc TEXT,
+		    route_type INTEGER,
+		    route_url TEXT,
 		    route_color CHARACTER VARYING(10),
-		    route_text_color CHARACTER VARYING(10)
+		    route_text_color CHARACTER VARYING(10),
+		    route_sort_order INTEGER
 		)
 		CREATE TABLE shapes(
 		    id SERIAL PRIMARY KEY,
@@ -63,21 +67,26 @@ BEGIN
 		    arrival_time TIME,
 		    departure_time TIME,
 		    stop_sequence INTEGER,
+		    stop_headsign CHARACTER VARYING(100),
 			pickup_type INTEGER,
 			drop_off_type INTEGER,
-		    shape_dist_traveled DOUBLE PRECISION
+		    shape_dist_traveled DOUBLE PRECISION,
+		    timepoint INTEGER
 		)
 		CREATE TABLE stops(
 		    id SERIAL PRIMARY KEY,
 		    stop_id CHARACTER VARYING(100),
 		    stop_name TEXT,
+		    stop_desc TEXT,
 		    stop_lat DOUBLE PRECISION,
 		    stop_lon DOUBLE PRECISION,
 		    stop_code CHARACTER VARYING(20),
+		    stop_url TEXT,
+		    zone_id CHARACTER VARYING(20),
 		    location_type INTEGER,
 		    parent_station CHARACTER VARYING(20),
 		    wheelchair_boarding INTEGER,
-		    stop_direction INTEGER
+		    stop_timezone CHARACTER VARYING(100)
 		)
 		CREATE TABLE trips(
 		    id SERIAL PRIMARY KEY,
@@ -85,6 +94,7 @@ BEGIN
 		    trip_id CHARACTER VARYING(100),
 		    service_id CHARACTER VARYING(255),
 		    trip_headsign TEXT,
+		    trip_short_name CHARACTER VARYING(100),
 		    direction_id INTEGER,
 		    block_id CHARACTER VARYING(100),
 		    shape_id CHARACTER VARYING(10),
@@ -95,7 +105,9 @@ BEGIN
 		    id SERIAL PRIMARY KEY,
 		    feed_id INT,
 		    title TEXT,
-		    latest_version DATE
+		    latest_version DATE,
+		    recent BOOLEAN,
+		    new_version BOOLEAN DEFAULT FALSE
 		);
     END IF;
 END;

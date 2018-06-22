@@ -1,5 +1,9 @@
 package com.pap.nuts.modules.interfaces;
 
+import java.util.Arrays;
+import java.util.StringJoiner;
+import java.util.stream.Collectors;
+
 import org.apache.log4j.Logger;
 
 public abstract class AbstractProcessService implements Runnable {
@@ -22,7 +26,9 @@ public abstract class AbstractProcessService implements Runnable {
 		try{
 			logic();
 		}catch(Exception e){
-			LOGGER.error(e);
+			StringJoiner join = new StringJoiner("\n");
+			Arrays.asList(e.getStackTrace()).stream().forEach(el -> join.add(el.toString()));
+			LOGGER.error(join.toString());
 			stop = true;
 		}
 	}

@@ -12,11 +12,16 @@
 			<span class="tit">Options</span>
 	  	</div>
 		<div id="main" ng-app="admin_funct">
-			<div id="feed_search_div" ng-controller="feed_list">
+			<div id="feed_search_div" ng-controller="feed_list" ng-init="getFeeds()">
 				<input id="search_field" type="text" ng-model="search" placeholder="Search feed">
+				<input id="feed_btn" class="input_f btn" type="button" value="Save Feeds" ng-click="postFeeds()">
 				<div id="list_div">
 					<ol id="list_pool" class="feed_lst" class="rounded-list">
-						<li ng-repeat="feed in feeds | filter:search"><p ng-click="clk()"><input class="ch" type="checkbox">{{feed}}</p></li>                   
+						<li ng-repeat="feed in feeds() | filter:search">
+							<p>
+								<input id="id_{{feed.id}}" class="ch" type="checkbox" value={{feed.sub_feed.title}},{{feed.sub_feed.latest}}>{{feed.title}}
+							</p>
+						</li>                   
 					</ol>
 				</div>
 			</div>

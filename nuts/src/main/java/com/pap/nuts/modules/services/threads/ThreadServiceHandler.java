@@ -31,6 +31,7 @@ public enum ThreadServiceHandler implements ThreadUtils {
 			}
 			if(!ThreadCache.getAllThread().stream().anyMatch(pre -> pre.getName().equals(name))){
 				manufactorum.setThreadName(name);
+				LOGG.info("Thread "+name+" has been started.");
 				cachedThreadPool.execute(process);
 			}else{
 				LOGG.warn("The thread "+name+" has already in thread pool.");
@@ -45,6 +46,7 @@ public enum ThreadServiceHandler implements ThreadUtils {
 			}
 			if(!ThreadCache.getAllThread().stream().anyMatch(pre -> pre.getName().equals(name))){
 				manufactorum.setThreadName(name);
+				LOGG.info("Thread "+name+" has been started.");
 				scheduledService.scheduleAtFixedRate(process, delayed, timeQty, unit);
 			}else{
 				LOGG.warn("The thread "+name+" has already in thread pool.");

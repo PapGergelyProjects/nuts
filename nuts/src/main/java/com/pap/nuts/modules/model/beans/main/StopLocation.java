@@ -1,4 +1,4 @@
-package com.pap.nuts.modules.model.beans;
+package com.pap.nuts.modules.model.beans.main;
 
 import java.util.Arrays;
 

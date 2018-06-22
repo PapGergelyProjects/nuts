@@ -15,7 +15,7 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
 import com.pap.nuts.modules.interfaces.DaoService;
-import com.pap.nuts.modules.model.beans.Coordinate;
+import com.pap.nuts.modules.model.beans.main.Coordinate;
 
 @Repository
 public class CoordinateDao extends JdbcDaoSupport implements DaoService<Coordinate> {
@@ -41,7 +41,7 @@ public class CoordinateDao extends JdbcDaoSupport implements DaoService<Coordina
 	}
 	
 	@Override
-	public void execute(Coordinate value) {
+	public void execute(String query) {
 	}
 
 	@Override

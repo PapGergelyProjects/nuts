@@ -116,17 +116,54 @@ locationSelector.controller('process_ctrl', function($rootScope, $scope, $http, 
 
 
 /********************		Opt		************************/
-adminFunctions.controller('feed_list', function($scope){
-	$scope.feeds = [
-		'Aachen, Germany',
-		'Budapest, Hungary',
-		'Huntsville, AL, USA',
-		'Indiana, USA',
-		'Innisfail QLD 4860, Australia',
-		'Israel'
-	];
+adminFunctions.controller('feed_list', function($scope, $http){
+	var locationStruct = [{}];
+	var feedStruct = [];
+	var selectedFeed = {};
+	var instance = this;
+	
+	$scope.getFeeds = function(){
+		$http.get("/nuts/radius/options/locations").then(function(response){
+			locationStruct = response['data'];
+		}, function(e_resp){
+			console.log(e_resp['data']);
+		});
+	}
+	
+	$scope.postFeeds = function(){
+		let json = [];
+		for(let box of $scope.checkBoxId()){
+			let id = box.id.replace('id_', '');
+			let map = {};
+			let vals = box.value.split(",")
+			map['id'] = id;
+			map['title'] = vals[0];
+			map['latest'] = vals[1];
+			json.push(map);
+		}
+		
+		$http.post("/nuts/radius/options/save_location", json).then(function(response){});
+	}
+	
+	$scope.feeds = function(){
+		return locationStruct;
+	}
+	
+	$scope.checkBoxId = function*(){
+		let chBox = document.getElementsByClassName("ch");
+		for(let i=0; i<chBox.length; i++){
+			if(chBox[i].checked){
+				yield chBox[i];
+			}
+		}
+	}
 	
 	$scope.clk = function(){
-		console.log("click");
+		let chBox = document.getElementsByClassName("ch");
+		for(let i=0; i<chBox.length; i++){
+			if(chBox[i].checked){
+				console.log(chBox[i].id);
+			}
+		}
 	}
 });

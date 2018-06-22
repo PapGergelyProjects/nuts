@@ -4,9 +4,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
-import com.pap.nuts.modules.model.beans.Coordinate;
-import com.pap.nuts.modules.model.beans.FeedVersion;
-import com.pap.nuts.modules.model.beans.StopLocation;
+import com.pap.nuts.modules.model.beans.main.Coordinate;
+import com.pap.nuts.modules.model.beans.main.FeedVersion;
+import com.pap.nuts.modules.model.beans.main.StopLocation;
 
 @Configuration
 public class BeanConfig {

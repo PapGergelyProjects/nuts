@@ -249,14 +249,14 @@ div[enabled=enabled] {
 #list_div{
 	width: 500px;
 	height: 200px;
-	padding-left: 20px;
+	padding-left: 0px;
 	overflow-y: auto;
 	border: 1px solid #a6a6a6;
 }
 #list_pool{
-    counter-reset: li;
-    list-style: none;
-    *list-style: decimal;
+    counter-reset: li; /* Initiate a counter */
+    list-style: none; /* Remove default numbering */
+    *list-style: decimal; /* Keep using default numbering for IE6/7 */
     font: 15px 'trebuchet MS', 'lucida sans';
     padding: 0;
     margin-bottom: 4em;
@@ -265,40 +265,50 @@ div[enabled=enabled] {
 .feed_lst p{
     position: relative;
     display: block;
-    padding: .4em .4em .4em 2em;
+    padding: .4em .4em .4em ;
     *padding: .4em;
-    margin: .5em 0;
+    margin: .5em 0 .3em 0em;
     background: #ddd;
-    color: #f2f2f2;
+    color: #444;
     text-decoration: none;
-    border-radius: .3em;
     transition: all .3s ease-out;
 }
 .feed_lst p:hover{
 	background: #eee;
 }
+.feed_lst p:after{
+    position: absolute; 
+    border: .5em solid transparent;
+    left: -1em;
+    top: 50%;
+    margin-top: -.5em;
+    transition: all .3s ease-out;               
+}
+
+.feed_lst p:hover:after{
+    left: -.5em;
+    border-left-color: #fa8072;             
+} 
 /*
 .feed_lst p:hover:before{
 	transform: rotate(90deg);
 }
-*/
+
 .feed_lst p:before{
     content: counter(li);
     counter-increment: li;
     position: absolute; 
-    left: -1.3em;
+    left: -2.5em;
     top: 50%;
-    margin-top: -1.3em;
-    background: #87ceeb;
+    margin-top: -1em;
+    background: #fa8072;
     height: 2em;
     width: 2em;
     line-height: 2em;
-    border: .3em solid #fff;
     text-align: center;
     font-weight: bold;
-    border-radius: 2em;
-    transition: all .3s ease-out;
 }
+*/
 .ch{
     top: 0;
     left: 0;

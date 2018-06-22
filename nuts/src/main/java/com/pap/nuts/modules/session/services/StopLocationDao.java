@@ -17,8 +17,8 @@ import org.springframework.stereotype.Repository;
 import com.pap.nuts.NutAppInitializer;
 import com.pap.nuts.modules.interfaces.BeanSetter;
 import com.pap.nuts.modules.interfaces.DaoService;
-import com.pap.nuts.modules.model.beans.Coordinate;
-import com.pap.nuts.modules.model.beans.StopLocation;
+import com.pap.nuts.modules.model.beans.main.Coordinate;
+import com.pap.nuts.modules.model.beans.main.StopLocation;
 
 @Repository
 public class StopLocationDao extends JdbcDaoSupport implements DaoService<StopLocation> {
@@ -43,7 +43,7 @@ public class StopLocationDao extends JdbcDaoSupport implements DaoService<StopLo
 	public void delete(StopLocation value) {}
 
 	@Override
-	public void execute(StopLocation value) {
+	public void execute(String query) {
 		
 	}
 
@@ -70,8 +70,8 @@ public class StopLocationDao extends JdbcDaoSupport implements DaoService<StopLo
 			location.getStopCoordinate().setLongitude(Double.valueOf(res.get("stop_lon").toString()));
 			double dist = Double.valueOf(doubleFormat.format(Double.valueOf(res.get("stop_distance").toString())).replace(",", "."));
 			location.setStopDistance(dist);
-			location.setStopColor(res.get("stop_color").toString());
-			location.setStopTextColor(res.get("text_color").toString());
+			location.setStopColor(String.valueOf(res.get("stop_color")));
+			location.setStopTextColor(String.valueOf(res.get("text_color")));
 			
 			return location;
 		};
@@ -96,8 +96,8 @@ public class StopLocationDao extends JdbcDaoSupport implements DaoService<StopLo
 			location.getStopCoordinate().setLongitude(Double.valueOf(res.get("stop_longitude").toString()));
 			double dist = Double.valueOf(doubleFormat.format(Double.valueOf(res.get("stop_distance").toString())).replace(",", "."));
 			location.setStopDistance(dist);
-			location.setStopColor(res.get("stop_color").toString());
-			location.setStopTextColor(res.get("text_color").toString());
+			location.setStopColor(String.valueOf(res.get("stop_color")));
+			location.setStopTextColor(String.valueOf(res.get("text_color")));
 			location.setDepartureTime(getRefinedArray(res.get("depart_time").toString()));
 			
 			return location;

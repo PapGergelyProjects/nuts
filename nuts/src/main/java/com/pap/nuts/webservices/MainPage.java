@@ -15,9 +15,9 @@ import javax.ws.rs.core.MediaType;
 import org.apache.log4j.Logger;
 
 import com.pap.nuts.NutAppInitializer;
-import com.pap.nuts.modules.model.beans.Coordinate;
-import com.pap.nuts.modules.model.beans.SearchValues;
-import com.pap.nuts.modules.model.beans.StopLocation;
+import com.pap.nuts.modules.model.beans.main.Coordinate;
+import com.pap.nuts.modules.model.beans.main.SearchValues;
+import com.pap.nuts.modules.model.beans.main.StopLocation;
 import com.pap.nuts.modules.services.threads.utils.DataProcess;
 import com.pap.nuts.modules.session.services.StopLocationDao;
 import com.pap.nuts.utils.ResourceReader;
