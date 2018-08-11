@@ -24,7 +24,7 @@ public class ResourceReader {
 	@Value("${google_api_key}")
 	private String apiKey; 
 	
-	@Value("classpath:html/nuts.html")
+	@Value("classpath:html/nutsAlter.html")
 	private Resource mainPage;
 	
 	@Value("classpath:html/nuts_options.html")

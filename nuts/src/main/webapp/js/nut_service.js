@@ -1,6 +1,7 @@
 var circleStorage = [];
 var markerStorage = [];
 var stopMarkerStorage = [];
+
 locationSelector.service('setLocation', function(stopCoordinatesAssembler){
 	var instance = this;
 	this.setCoordinates = function(coordinate, stopCoordinates, r){
@@ -186,6 +187,23 @@ locationSelector.service('loader', function(){
 	}
 });
 
+locationSelector.service('error_message', function(){
+	
+	this.pushErrorMessage = function(){
+		getById('sh_palce').disabled=true;
+		getById('coord_search_btn').disabled=true;
+		getById('points').disabled=true;
+		//getById('google_map').setAttribute("disabled", "disabled");
+	}
+	
+	this.pullMessage = function(){
+		getById('sh_palce').disabled=false;
+		getById('coord_search_btn').disabled=false;
+		getById('points').disabled=false;
+		//getById('google_map').setAttribute("disabled", "enabled");
+	}
+	
+});
 
 adminFunctions.service('sessionStorage', function(){
 	
@@ -197,5 +215,8 @@ adminFunctions.service('sessionStorage', function(){
 		return sessionStorage.getItem(elementName);
 	}
 	
-})
+});
+
+
+
 

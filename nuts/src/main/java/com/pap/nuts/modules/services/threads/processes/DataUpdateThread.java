@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.StringJoiner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -54,11 +55,15 @@ public class DataUpdateThread extends AbstractProcessService {
 		feedVersDao = NutAppInitializer.getContext().getBean(FeedVersionDao.class);
 		LOGGER.info("Check updated versions...");
 		List<FeedVersion> version = feedVersDao.getAll();
-		if(version.stream().anyMatch(FeedVersion::isNewVersion)){// TODO: Temp sol, this now search to only the first occurrence, but later it must find the precise feed which is need to update
+		if(version.stream().anyMatch(FeedVersion::isNewVersion)){// TODO: Temp sol, this now search to only the first occurrence, but later it must find the precise feed which is need to be update
 			feedIds = version.stream().filter(pre -> pre.isNewVersion()).map(mp -> mp.getFeedId()).collect(Collectors.toList());
 			checkFolderForContent();
 		}
-		feedVersDao.execute("UPDATE feed_version SET new_version=false WHERE feed_id IN "+feedIds.stream().map(mp -> mp.toString()).collect(Collectors.joining(",", "(", ")")));
+		if(feedIds != null){
+			feedVersDao.execute("UPDATE feed_version SET new_version=false WHERE feed_id IN "+feedIds.stream().map(mp -> mp.toString()).collect(Collectors.joining(",", "(", ")")));
+		}else{
+			LOGGER.info("There is no new update!");
+		}
 	}
 	
     private void checkFolderForContent() throws IOException{

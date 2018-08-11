@@ -2,7 +2,7 @@ locationSelector.directive('loading', function($rootScope){
 	return{
 		restric: 'E',
 		replace: true,
-		template: '<div id"progress_div"><progress id="progress_bar"></progress></div>',
+		template: '<div id="progress_div"><progress id="progress_bar"></progress></div>',
 		link: function(scope, element, attr){
 			$rootScope.$watch('loading', function(isLoad){
 				$rootScope.loading = isLoad;

@@ -68,21 +68,21 @@ locationSelector.controller('coordinate_select_ctrl', function($rootScope, $scop
 	};
 });
 
-locationSelector.controller('utils_ctrl', function($scope, $window){
+locationSelector.controller('utils_ctrl', function($scope, $window, error_message){
 	$scope.radius=500;
 	$scope.checkValue = function(){
-		if(Number(getById('rad').value) > 5000){
+		if(isNaN(getById('rad').value)){
+			$scope.error_msg = "Funny... the radius can be only number.";
+			error_message.pushErrorMessage();
+		}else if(Number(getById('rad').value) > 5000){
 			$scope.error_msg = "The radius can be 5000 m, please give a lower one.";
-			getById('sh_palce').disabled=true;
-			getById('coord_search_btn').disabled=true;
-			getById('points').disabled=true;
-			getById('google_map').setAttribute("disabled", "disabled");
+			error_message.pushErrorMessage();
+		}else if(Number(getById('rad').value) <= 20){
+			$scope.error_msg = "The radius cannot be lower than 20 m!";
+			error_message.pushErrorMessage();
 		}else{
 			$scope.error_msg = "";
-			getById('sh_palce').disabled=false;
-			getById('coord_search_btn').disabled=false;
-			getById('points').disabled=false;
-			getById('google_map').setAttribute("disabled", "enabled");
+			error_message.pullMessage();
 		}
 	}
 	$scope.checkClick = function(){
