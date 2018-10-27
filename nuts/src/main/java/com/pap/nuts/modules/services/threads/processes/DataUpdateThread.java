@@ -112,9 +112,9 @@ public class DataUpdateThread extends AbstractProcessService {
             List<String> fileContent = Files.readAllLines(Paths.get(tempFolder+file.getName()), Charset.forName("utf-8"));
             String tableName = file.getName().replace(".txt", "");
             LOGGER.info("Table next: "+tableName);
-            String[] columns = fileContent.remove(0).split(",");
-            String joinedCols = Arrays.asList(columns).stream().collect(Collectors.joining(",","(",")"));
             TableInsertValues value = tableList.get(tableName);
+            List<String> columns = value.getColNames(new ArrayList<>(Arrays.asList(fileContent.remove(0).split(","))));
+            String joinedCols = columns.stream().collect(Collectors.joining(",","(",")"));
             while(0<fileContent.size()){
             	StringBuilder insert = new StringBuilder();
             	insert.append("INSERT INTO ").append(tableName).append(" ");
@@ -128,9 +128,9 @@ public class DataUpdateThread extends AbstractProcessService {
             		String raw = replaceUselessComma(fileContent.remove(0));
             		String[] rows = raw.endsWith(",") ? (raw+"null").replace("\"", "").split(",") : raw.replace("\"", "").split(",");//
             		Map<String, String> content = new HashMap<>();
-            		for (int j = 0; j < columns.length; j++) {
+            		for (int j = 0; j < columns.size(); j++) {
             			String row = rows[j];
-            			content.put(columns[j], row.isEmpty() ? "null" : row);
+            			content.put(columns.get(j), row.isEmpty() ? "null" : row);
             		}
             		joinValues.add(value.getInsertValue(columns, content));
             		cnt--;

@@ -1,7 +1,10 @@
 package com.pap.nuts.modules.services.data.utils;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.EnumSet;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
 
@@ -15,17 +18,26 @@ import java.util.StringJoiner;
 public enum TableInsertValues {
     AGENCY("agency"){
         @Override
-        public String getInsertValue(String[] columns, Map<String, String> records) {
+        public String getInsertValue(List<String> columns, Map<String, String> records) {
             StringJoiner insertValues = new StringJoiner(",", "(",")");
             Map<String, String> valueMap = new HashMap<>();
             Arrays.asList("agency_id", "agency_name", "agency_url", "agency_timezone", "agency_lang", "agency_phone").forEach(e -> valueMap.put(e, nullValues(records.get(e), true)));
 
             return getFilteredValues(columns, insertValues, valueMap);
         }
+
+		@Override
+		public List<String> getColNames(List<String> rawCols) {
+			rawCols.retainAll(
+				new ArrayList<>(
+					Arrays.asList("agency_id", "agency_name", "agency_url", "agency_timezone", "agency_lang", "agency_phone")
+				));
+			return rawCols;
+		}
     },
     FEED_INFO("feed_info"){
         @Override
-        public String getInsertValue(String[] columns, Map<String, String> records) {
+        public String getInsertValue(List<String> columns, Map<String, String> records) {
             StringJoiner insertValues = new StringJoiner(",", "(",")");
             Map<String, String> valueMap = new HashMap<>();
             Arrays.asList("feed_publisher_name", "feed_publisher_url", "feed_lang").forEach(e -> valueMap.put(e, nullValues(records.get(e), true)));
@@ -36,10 +48,19 @@ public enum TableInsertValues {
 
             return getFilteredValues(columns, insertValues, valueMap);
         }
+        
+		@Override
+		public List<String> getColNames(List<String> rawCols) {
+			rawCols.retainAll(
+				new ArrayList<>(
+					Arrays.asList("feed_publisher_name", "feed_publisher_url", "feed_lang", "feed_start_date", "feed_end_date", "feed_version", "feed_ext_version")
+				));
+			return rawCols;
+		}
     },
     CALENDAR_DATES("calendar_dates"){
         @Override
-        public String getInsertValue(String[] columns, Map<String, String> records) {
+        public String getInsertValue(List<String> columns, Map<String, String> records) {
             StringJoiner insertValues = new StringJoiner(",", "(",")");
             Map<String, String> valueMap = new HashMap<>();
             valueMap.put("service_id", nullValues(records.get("service_id"), true));
@@ -48,10 +69,19 @@ public enum TableInsertValues {
 
             return getFilteredValues(columns, insertValues, valueMap);
         }
+        
+		@Override
+		public List<String> getColNames(List<String> rawCols) {
+			rawCols.retainAll(
+				new ArrayList<>(
+					Arrays.asList("service_id", "date", "exception_type")
+				));
+			return rawCols;
+		}
     },
     PATHWAYS("pathways"){
         @Override
-        public String getInsertValue(String[] columns, Map<String, String> records) {
+        public String getInsertValue(List<String> columns, Map<String, String> records) {
             StringJoiner insertValues = new StringJoiner(",", "(",")");
             Map<String, String> valueMap = new HashMap<>();
             valueMap.put("pathway_id", nullValues(records.get("pathway_id"), true));
@@ -63,10 +93,19 @@ public enum TableInsertValues {
             
             return getFilteredValues(columns, insertValues, valueMap);
         }
+        
+		@Override
+		public List<String> getColNames(List<String> rawCols) {
+			rawCols.retainAll(
+				new ArrayList<>(
+					Arrays.asList("pathway_id", "pathway_type", "from_stop_id", "to_stop_id", "traversal_time", "wheelchair_traversal_time")
+				));
+			return rawCols;
+		}
     },
     ROUTES("routes"){
         @Override
-        public String getInsertValue(String[] columns, Map<String, String> records) {
+        public String getInsertValue(List<String> columns, Map<String, String> records) {
             StringJoiner insertValues = new StringJoiner(",", "(",")");
             Map<String, String> valueMap = new HashMap<>();
             valueMap.put("agency_id", nullValues(records.get("agency_id"), true));
@@ -82,10 +121,19 @@ public enum TableInsertValues {
             
             return getFilteredValues(columns, insertValues, valueMap);
         }
+        
+		@Override
+		public List<String> getColNames(List<String> rawCols) {
+			rawCols.retainAll(
+				new ArrayList<>(
+					Arrays.asList("agency_id", "route_id", "route_short_name", "route_long_name", "route_type", "route_desc", "route_url", "route_color", "route_text_color", "route_sort_order")
+				));
+			return rawCols;
+		}
     },
     SHAPES("shapes"){
         @Override
-        public String getInsertValue(String[] columns, Map<String, String> records) {
+        public String getInsertValue(List<String> columns, Map<String, String> records) {
             StringJoiner insertValues = new StringJoiner(",", "(",")");
             Map<String, String> valueMap = new HashMap<>();
             valueMap.put("shape_id", "'"+records.get("shape_id")+"'");
@@ -96,10 +144,19 @@ public enum TableInsertValues {
             
             return getFilteredValues(columns, insertValues, valueMap);
         }
+        
+		@Override
+		public List<String> getColNames(List<String> rawCols) {
+			rawCols.retainAll(
+				new ArrayList<>(
+					Arrays.asList("shape_id", "shape_pt_sequence", "shape_pt_lat", "shape_pt_lon", "shape_dist_traveled")
+				));
+			return rawCols;
+		}
     },
     STOP_TIMES("stop_times"){
         @Override
-        public String getInsertValue(String[] columns, Map<String, String> records) {
+        public String getInsertValue(List<String> columns, Map<String, String> records) {
             StringJoiner insertValues = new StringJoiner(",", "(",")");
             Map<String, String> valueMap = new HashMap<>();
             valueMap.put("trip_id", "'"+records.get("trip_id")+"'");
@@ -115,10 +172,19 @@ public enum TableInsertValues {
             
             return getFilteredValues(columns, insertValues, valueMap);
         }
+        
+		@Override
+		public List<String> getColNames(List<String> rawCols) {
+			rawCols.retainAll(
+				new ArrayList<>(
+					Arrays.asList("trip_id", "stop_id", "arrival_time", "departure_time", "stop_sequence", "stop_headsign", "pickup_type", "drop_off_type", "shape_dist_traveled", "timepoint")
+				));
+			return rawCols;
+		}
     },
     STOPS("stops"){
         @Override
-        public String getInsertValue(String[] columns, Map<String, String> records) {
+        public String getInsertValue(List<String> columns, Map<String, String> records) {
             StringJoiner insertValues = new StringJoiner(",", "(",")");
             Map<String, String> valueMap = new HashMap<>();
             valueMap.put("stop_id", "'"+records.get("stop_id")+"'");
@@ -131,15 +197,23 @@ public enum TableInsertValues {
             valueMap.put("location_type", nullValues(records.get("location_type"), false));
             valueMap.put("parent_station", nullValues(records.get("parent_station"), true));
             valueMap.put("wheelchair_boarding", nullValues(records.get("wheelchair_boarding"), false));
-            valueMap.put("stop_direction", nullValues(records.get("stop_direction"), false));
             valueMap.put("stop_timezone", nullValues(records.get("stop_timezone"), true));
            
             return getFilteredValues(columns, insertValues, valueMap);
         }
+        
+		@Override
+		public List<String> getColNames(List<String> rawCols) {
+			rawCols.retainAll(
+					new ArrayList<>(
+						Arrays.asList("stop_id", "stop_name", "stop_desc", "stop_lat", "stop_lon", "stop_url", "stop_code", "location_type", "parent_station", "wheelchair_boarding", "stop_timezone")
+					));
+			return rawCols;
+		}
     },
     TRIPS("trips"){
         @Override
-        public String getInsertValue(String[] columns, Map<String, String> records) {
+        public String getInsertValue(List<String> columns, Map<String, String> records) {
             StringJoiner insertValues = new StringJoiner(",", "(",")");
             Map<String, String> valueMap = new HashMap<>();
             valueMap.put("route_id", "'"+records.get("route_id")+"'");
@@ -155,6 +229,15 @@ public enum TableInsertValues {
 
             return getFilteredValues(columns, insertValues, valueMap);
         }
+        
+		@Override
+		public List<String> getColNames(List<String> rawCols) {
+			rawCols.retainAll(
+				new ArrayList<>(
+					Arrays.asList("route_id", "trip_id", "service_id", "trip_headsign", "trip_short_name", "direction_id", "block_id", "shape_id", "wheelchair_accessible", "bikes_allowed")
+				));
+			return rawCols;
+		}
     };
 	
 	/**
@@ -163,7 +246,9 @@ public enum TableInsertValues {
 	 * @param records The map which contains the actual values.
 	 * @return An insert value group
 	 */
-    public abstract String getInsertValue(String[] columns, Map<String, String> records);
+    public abstract String getInsertValue(List<String> columns, Map<String, String> records);
+    
+    public abstract List<String> getColNames(List<String> rawCols);
     
     private String tableName;
 
@@ -186,9 +271,10 @@ public enum TableInsertValues {
         return "null".equals(value) ? "null" : isStr ? "'"+value+"'" : value;
     }
     
-    private static String getFilteredValues(String[] columns, StringJoiner insertValues, Map<String, String> valueMap){
-        for (int i = 0; i < columns.length; i++) {
-        	insertValues.add(valueMap.get(columns[i]));
+    private static String getFilteredValues(List<String> columns, StringJoiner insertValues, Map<String, String> valueMap){
+        for (int i = 0; i < columns.size(); i++) {
+        	String col = columns.get(i);
+        	insertValues.add(valueMap.get(col));
 		}
         
         String filteredValues = insertValues.toString().replaceAll("(skip\\,?)", "").replaceAll(",\\)", "\\)");
