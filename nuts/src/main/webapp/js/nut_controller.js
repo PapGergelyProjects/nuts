@@ -73,16 +73,16 @@ locationSelector.controller('utils_ctrl', function($scope, $window, error_messag
 	$scope.checkValue = function(){
 		if(isNaN(getById('rad').value)){
 			$scope.error_msg = "Funny... the radius can be only number.";
-			error_message.pushErrorMessage();
+			error_message.pushErrorMessage(true);
 		}else if(Number(getById('rad').value) > 5000){
 			$scope.error_msg = "The radius can be 5000 m, please give a lower one.";
-			error_message.pushErrorMessage();
+			error_message.pushErrorMessage(true);
 		}else if(Number(getById('rad').value) <= 20){
 			$scope.error_msg = "The radius cannot be lower than 20 m!";
-			error_message.pushErrorMessage();
+			error_message.pushErrorMessage(true);
 		}else{
 			$scope.error_msg = "";
-			error_message.pullMessage();
+			error_message.pushErrorMessage(false);
 		}
 	}
 	$scope.checkClick = function(){
@@ -115,7 +115,7 @@ locationSelector.controller('process_ctrl', function($rootScope, $scope, $http, 
 });
 
 
-/********************		Opt		************************/
+/********************		Control		************************/
 adminFunctions.controller('feed_list', function($scope, $http){
 	var locationStruct = [{}];
 	var feedStruct = [];

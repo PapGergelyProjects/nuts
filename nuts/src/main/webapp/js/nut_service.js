@@ -189,22 +189,16 @@ locationSelector.service('loader', function(){
 
 locationSelector.service('error_message', function(){
 	
-	this.pushErrorMessage = function(){
-		getById('sh_palce').disabled=true;
-		getById('coord_search_btn').disabled=true;
-		getById('points').disabled=true;
-		//getById('google_map').setAttribute("disabled", "disabled");
-	}
-	
-	this.pullMessage = function(){
-		getById('sh_palce').disabled=false;
-		getById('coord_search_btn').disabled=false;
-		getById('points').disabled=false;
-		//getById('google_map').setAttribute("disabled", "enabled");
+	this.pushErrorMessage = function(isEnabled){
+		getById('sh_palce').disabled=isEnabled;
+		getById('coord_search_btn').disabled=isEnabled;
+		getById('points').disabled=isEnabled;
+		getById('google_map').disabled=isEnabled;
 	}
 	
 });
 
+/********************		Control		************************/
 adminFunctions.service('sessionStorage', function(){
 	
 	this.store = function(elementName, element){
