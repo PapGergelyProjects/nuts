@@ -22,7 +22,7 @@ public class FeedUtils {
 		List<Feeds> feedList = new ArrayList<>();
 		String feeds = HttpRequestService.instance.getRequest(String.format("http://api.transitfeeds.com/v1/getFeeds?key=%s&descendants=1&page=100&limit=100&type=gtfs", transitApiKey)); //Dummy query to know the number of pages.
 		SwaggerFeed allFeed = gson.fromJson(removeArrayNoti(feeds), SwaggerFeed.class);
-		for (int i = 1; i <= allFeed.results.numPages; i++) {// Because I need all GTFS type feed, but swagger support querying by page only.
+		for (int i = 1; i <= allFeed.results.numPages; i++) {// Because I need all GTFS type feed, but swagger supports querying by page only.
 			String feedUrl = String.format("http://api.transitfeeds.com/v1/getFeeds?key=%s&descendants=1&page=%d&limit=100&type=gtfs", transitApiKey, i);
 			String pageFeeds = HttpRequestService.instance.getRequest(feedUrl);
 			SwaggerFeed actualPage = gson.fromJson(removeArrayNoti(pageFeeds), SwaggerFeed.class);

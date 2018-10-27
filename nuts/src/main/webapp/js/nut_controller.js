@@ -99,7 +99,7 @@ locationSelector.controller('utils_ctrl', function($scope, $window, error_messag
 });
 
 locationSelector.controller('process_ctrl', function($rootScope, $scope, $http, $interval){
-	/*This needed to track the server side, because the data insertion, refreshment take serious time, while the user cannot do anything, but wait.
+	/*This needed to track the server side, because the data insertion, refreshment takes serious time, while the user cannot do anything, but wait.
 	so with this solution, at least the actual process will show. */
 	$scope.backgroundProcesses = function(){
 		$http.get('/nuts/radius/server_stat').then(function(resp){

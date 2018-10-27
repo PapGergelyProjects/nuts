@@ -164,7 +164,6 @@ public enum TableInsertValues {
 	 * @return An insert value group
 	 */
     public abstract String getInsertValue(String[] columns, Map<String, String> records);
-    //public abstract String tableColumns();
     
     private String tableName;
 
